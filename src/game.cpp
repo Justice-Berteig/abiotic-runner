@@ -76,28 +76,31 @@ void Game::m_draw() {
         );
 
     // Draw dirt floor.
-    Texture2D& tex{ m_assetManager->requestTexture(Assets::Texture::dirt) };
+    Texture2D& dirtTexture{ m_assetManager->requestTexture(Assets::Texture::dirt) };
 
-    int desiredTileLength{ 12 };
-    int tileScale{ (renderWidth / tex.width) / desiredTileLength };
-    std::cout << tileScale << '\n';
+    int minimumTileLength{ 12 };
+    int tileScale{ (renderWidth / dirtTexture.width) / minimumTileLength };
+    // TODO: Add minimum window size to prevent 0 tileScale
+    int scaledTileSize{ dirtTexture.width * tileScale };
+    int tileColumnCount{ (renderWidth / scaledTileSize) + 1 };
+    int tileRowCount{ (renderHeight / scaledTileSize) + 1 };
 
-    for(int i{ 0 }; i < desiredTileLength; ++i)
+    for(int y{ 0 }; y < tileColumnCount; ++y)
     {
-        DrawTextureEx(
-            tex,
-            {
-                static_cast<float>(i * tex.width * tileScale),
-                renderHeight / 2.0f
-            },
-            0,
-            tileScale,
-            WHITE
-        );
+        for(int x{ 0 }; x < tileColumnCount; ++x)
+        {
+            DrawTextureEx(
+                dirtTexture,
+                {
+                    static_cast<float>(x * scaledTileSize),
+                    (renderHeight / 2.0f) + (y * scaledTileSize)
+                },
+                0,
+                tileScale,
+                WHITE
+            );
+        }
     }
-
-    int remainingSpace{ renderWidth - (desiredTileLength * tex.width * tileScale) };
-    std::cout << remainingSpace / (tex.width * tileScale) << '\n';
 
     EndDrawing();
 }
