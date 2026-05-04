@@ -17,14 +17,46 @@ Game::Game()
 {
     std::cout << "[Game]: created.\n";
 
+    // Initialize window and set some flags.
     InitWindow(
-        1000,
-        1000,
+        Globals::minScreenWidth,
+        Globals::minScreenHeight,
         "Abiotic Runner"
     );
+
     SetWindowState(FLAG_VSYNC_HINT);
     SetWindowState(FLAG_WINDOW_RESIZABLE);
     SetWindowMinSize(Globals::minScreenWidth, Globals::minScreenHeight);
+
+    // Determine inital window size and position based on the current monitor's
+    // dimensions.
+    int currentMonitorID{ GetCurrentMonitor() };
+    int monitorWidth    { GetMonitorWidth(currentMonitorID) };
+    int monitorHeight   { GetMonitorHeight(currentMonitorID) };
+
+    unsigned windowScale{ 2 };
+    while(
+        monitorWidth     > (Globals::minScreenWidth * windowScale)
+        && monitorHeight > (Globals::minScreenHeight * windowScale)
+    ) {
+        ++windowScale;
+    }
+    if(windowScale > 2) windowScale -= 2;
+    else                windowScale -= 1;
+
+    unsigned targetWindowWidth    { Globals::minScreenWidth * windowScale };
+    unsigned targetWindowHeight   { Globals::minScreenHeight * windowScale };
+    unsigned targetWindowPositionX{ (monitorWidth - targetWindowWidth) / 2 };
+    unsigned targetWindowPositionY{ (monitorHeight - targetWindowHeight) / 2 };
+
+    SetWindowSize(
+        Globals::minScreenWidth * windowScale,
+        Globals::minScreenHeight * windowScale
+    );
+    SetWindowPosition(
+        targetWindowPositionX,
+        targetWindowPositionY
+    );
 }
 
 
@@ -55,7 +87,7 @@ void Game::run() {
 
 
 void Game::m_tick(TimeMicroseconds deltaTime) {
-    std::cout << deltaTime.count() << '\n';
+    // std::cout << deltaTime.count() << '\n';
 }
 
 
@@ -96,14 +128,21 @@ void Game::m_draw() {
     // Draw dirt floor.
     Texture2D& dirtTexture{ m_assetManager->requestTexture(Assets::Texture::dirt) };
 
-    int minimumTileLength{ 12 };
-    int tileScale{ (renderWidth / dirtTexture.width) / minimumTileLength };
-    // TODO: Add minimum window size to prevent 0 tileScale
+    int tileScale{ (renderWidth / dirtTexture.width) / Globals::minTileColumns };
     int scaledTileSize{ dirtTexture.width * tileScale };
-    int tileColumnCount{ (renderWidth / scaledTileSize) + 1 };
-    int tileRowCount{ (renderHeight / scaledTileSize) + 1 };
+    int floorStartPosition{
+        static_cast<int>(renderHeight * Globals::skyScreenPercentage)
+    };
 
-    for(int y{ 0 }; y < tileColumnCount; ++y)
+    int tileColumnCount{ (renderWidth / scaledTileSize) + 1 };
+    int tileRowCount{
+        (
+            (renderHeight - floorStartPosition)
+            / scaledTileSize
+        ) + 1
+    };
+
+    for(int y{ 0 }; y < tileRowCount; ++y)
     {
         for(int x{ 0 }; x < tileColumnCount; ++x)
         {
@@ -111,7 +150,7 @@ void Game::m_draw() {
                 dirtTexture,
                 {
                     static_cast<float>(x * scaledTileSize),
-                    (renderHeight / 2.0f) + (y * scaledTileSize)
+                    static_cast<float>(floorStartPosition + (y * scaledTileSize))
                 },
                 0,
                 tileScale,
