@@ -23,6 +23,8 @@ Game::Game()
         "Abiotic Runner"
     );
     SetWindowState(FLAG_VSYNC_HINT);
+    SetWindowState(FLAG_WINDOW_RESIZABLE);
+    SetWindowMinSize(Globals::minScreenWidth, Globals::minScreenHeight);
 }
 
 
@@ -41,7 +43,7 @@ void Game::run() {
         TimeMicroseconds deltaTime{
             std::chrono::duration_cast<TimeMicroseconds>(
                 currentFrameTime - m_lastFrameTime
-                )
+            )
         };
         m_lastFrameTime = currentFrameTime;
 
@@ -62,8 +64,24 @@ void Game::m_draw() {
 
     ClearBackground(RAYWHITE);
 
+    // Get the dimensions of the window at the beginning of each draw so it
+    // updates when the window is resized.
     int renderWidth  { GetRenderWidth() };
     int renderHeight { GetRenderHeight() };
+
+    // Force resize window if too small.
+    if(
+        renderWidth < Globals::minScreenWidth
+        || renderHeight < Globals::minScreenHeight
+    ) {
+        int newScreenWidth{ renderWidth };
+        int newScreenHeight{ renderHeight };
+        if(renderWidth < Globals::minScreenWidth) newScreenWidth = Globals::minScreenWidth;
+        if(renderHeight < Globals::minScreenHeight) newScreenHeight = Globals::minScreenHeight;
+        SetWindowSize(newScreenWidth, newScreenHeight);
+        renderWidth = newScreenWidth;
+        renderHeight = newScreenHeight;
+    }
 
     // Draw sky background.
     DrawRectangleGradientV(
@@ -101,6 +119,8 @@ void Game::m_draw() {
             );
         }
     }
+
+    // Draw entities.
 
     EndDrawing();
 }
