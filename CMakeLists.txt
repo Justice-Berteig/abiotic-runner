@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 4.0)
 project(
-  abiotic_runner
-  VERSION 1.0
-  LANGUAGES CXX
+    abiotic_runner
+    VERSION 1.0
+    LANGUAGES CXX
 )
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_BUILD_TYPE Debug)
@@ -29,14 +29,16 @@ set(PROJECT_INCLUDE "${CMAKE_CURRENT_LIST_DIR}/src/") # Define PROJECT_INCLUDE t
 
 # Declaring our executable
 add_executable(
-  ${PROJECT_NAME}
-  src/asset_manager.cpp
-  src/asset_manager.hpp
-  src/assets.hpp
-  src/type_aliases.hpp
-  src/main.cpp
-  src/game.cpp
-  src/game.hpp
+    ${PROJECT_NAME}
+    src/asset_manager.cpp
+    src/asset_manager.hpp
+    src/assets.hpp
+    src/type_aliases.hpp
+    src/main.cpp
+    src/game.cpp
+    src/game.hpp
+    src/player.cpp
+    src/player.hpp
 )
 target_sources(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCES})
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_INCLUDE})

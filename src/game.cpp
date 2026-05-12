@@ -12,11 +12,11 @@
 
 
 Game::Game()
-    : m_lastFrameTime(std::chrono::steady_clock::now())
+    : m_groundOffset(0.0f)
+    , m_lastFrameTime(std::chrono::steady_clock::now())
     , m_assetManager(std::make_unique<AssetManager>())
+    , m_player(std::make_unique<Player>())
 {
-    std::cout << "[Game]: created.\n";
-
     // Initialize window and set some flags.
     InitWindow(
         Globals::minScreenWidth,
@@ -50,13 +50,15 @@ Game::Game()
     unsigned targetWindowPositionY{ (monitorHeight - targetWindowHeight) / 2 };
 
     SetWindowSize(
-        Globals::minScreenWidth * windowScale,
-        Globals::minScreenHeight * windowScale
+        targetWindowWidth,
+        targetWindowHeight
     );
     SetWindowPosition(
         targetWindowPositionX,
         targetWindowPositionY
     );
+
+    std::cout << "[Game]: created.\n";
 }
 
 
@@ -87,7 +89,9 @@ void Game::run() {
 
 
 void Game::m_tick(TimeMicroseconds deltaTime) {
-    // std::cout << deltaTime.count() << '\n';
+    m_groundOffset += 0.0001f * deltaTime.count();
+    while(m_groundOffset > 32.0f) m_groundOffset -= 32.0f;
+    m_player->tick(deltaTime);
 }
 
 
@@ -108,13 +112,47 @@ void Game::m_draw() {
     ) {
         int newScreenWidth{ renderWidth };
         int newScreenHeight{ renderHeight };
-        if(renderWidth < Globals::minScreenWidth) newScreenWidth = Globals::minScreenWidth;
-        if(renderHeight < Globals::minScreenHeight) newScreenHeight = Globals::minScreenHeight;
+        if(renderWidth < Globals::minScreenWidth) {
+            newScreenWidth = Globals::minScreenWidth;
+        }
+        if(renderHeight < Globals::minScreenHeight) {
+            newScreenHeight = Globals::minScreenHeight;
+        }
         SetWindowSize(newScreenWidth, newScreenHeight);
         renderWidth = newScreenWidth;
         renderHeight = newScreenHeight;
     }
 
+    int renderScale{ (renderWidth / 32) / Globals::minTileColumns };
+    int floorStartPosition{
+        static_cast<int>(renderHeight * Globals::skyScreenPercentage)
+    };
+
+    // Draw Background.
+    m_drawBackground(
+        floorStartPosition,
+        renderWidth,
+        renderHeight,
+        renderScale
+    );
+
+
+    // Draw entities.
+    m_player->draw(
+        floorStartPosition,
+        renderScale,
+        m_assetManager
+    );
+
+    EndDrawing();
+}
+
+void Game::m_drawBackground(
+    int floorStartPosition,
+    int renderWidth,
+    int renderHeight,
+    float renderScale
+) {
     // Draw sky background.
     DrawRectangleGradientV(
         0,
@@ -128,11 +166,7 @@ void Game::m_draw() {
     // Draw dirt floor.
     Texture2D& dirtTexture{ m_assetManager->requestTexture(Assets::Texture::dirt) };
 
-    int tileScale{ (renderWidth / dirtTexture.width) / Globals::minTileColumns };
-    int scaledTileSize{ dirtTexture.width * tileScale };
-    int floorStartPosition{
-        static_cast<int>(renderHeight * Globals::skyScreenPercentage)
-    };
+    int scaledTileSize{ static_cast<int>(dirtTexture.width * renderScale) };
 
     int tileColumnCount{ (renderWidth / scaledTileSize) + 1 };
     int tileRowCount{
@@ -142,24 +176,18 @@ void Game::m_draw() {
         ) + 1
     };
 
-    for(int y{ 0 }; y < tileRowCount; ++y)
-    {
-        for(int x{ 0 }; x < tileColumnCount; ++x)
-        {
+    for(int y{ 0 }; y < tileRowCount; ++y) {
+        for(int x{ 0 }; x < tileColumnCount; ++x) {
             DrawTextureEx(
                 dirtTexture,
                 {
-                    static_cast<float>(x * scaledTileSize),
+                    static_cast<float>(x * scaledTileSize) - (m_groundOffset * renderScale),
                     static_cast<float>(floorStartPosition + (y * scaledTileSize))
                 },
                 0,
-                tileScale,
+                renderScale,
                 WHITE
             );
         }
     }
-
-    // Draw entities.
-
-    EndDrawing();
 }

@@ -9,7 +9,8 @@ Define enums to describe all assets.
 
 namespace Assets {
     enum class Texture {
-        dirt
+        dirt,
+        player
     };
 
     constexpr const char* getPathForTexture(Texture texture)
@@ -18,6 +19,8 @@ namespace Assets {
         {
             case Texture::dirt:
                 return "../resources/dirt.png";
+            case Texture::player:
+                return "../resources/player.png";
             default:
                 throw std::runtime_error(
                         "ERROR: Invalid cannot find path for given texture."
