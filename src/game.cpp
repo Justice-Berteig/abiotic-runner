@@ -2,9 +2,9 @@
 
 #include "assets.hpp"
 #include "globals.hpp"
+#include "type_aliases.hpp"
 
 #include "raylib.h"
-#include "type_aliases.hpp"
 
 #include <chrono>
 #include <iostream>
