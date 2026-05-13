@@ -17,8 +17,8 @@ public:
 
     void tick(TimeMicroseconds deltaTime);
     void draw(
-        int                            floorStartPosition,
         float                          renderScale,
+        int                            floorStartPosition,
         std::unique_ptr<AssetManager>& assetManager
     );
 

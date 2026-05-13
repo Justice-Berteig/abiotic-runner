@@ -41,9 +41,9 @@ class Game {
          */
         void m_draw();
         void m_drawBackground(
+            float renderScale,
             int   floorStartPosition,
             int   renderWidth,
-            int   renderHeight,
-            float renderScale
+            int   renderHeight
         );
 };

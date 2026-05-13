@@ -38,8 +38,8 @@ void Player::tick(TimeMicroseconds deltaTime) {
 
 
 void Player::draw(
-    int   floorStartPosition,
-    float renderScale,
+    float                          renderScale,
+    int                            floorStartPosition,
     std::unique_ptr<AssetManager>& assetManager
 ) {
     Texture2D playerSprite{

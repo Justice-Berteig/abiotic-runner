@@ -7,6 +7,7 @@
 #include "raylib.h"
 
 #include <chrono>
+#include <cmath>
 #include <iostream>
 #include <memory>
 
@@ -98,8 +99,6 @@ void Game::m_tick(TimeMicroseconds deltaTime) {
 void Game::m_draw() {
     BeginDrawing();
 
-    ClearBackground(RAYWHITE);
-
     // Get the dimensions of the window at the beginning of each draw so it
     // updates when the window is resized.
     int renderWidth  { GetRenderWidth() };
@@ -123,24 +122,30 @@ void Game::m_draw() {
         renderHeight = newScreenHeight;
     }
 
-    int renderScale{ (renderWidth / 32) / Globals::minTileColumns };
+    ClearBackground(RAYWHITE);
+
+    // Determine important variables for rendering.
+    int tileWidth{ 
+        m_assetManager->requestTexture(Assets::Texture::dirt).width
+    };
+    int renderScale{ (renderWidth / tileWidth) / Globals::minTileColumns };
     int floorStartPosition{
         static_cast<int>(renderHeight * Globals::skyScreenPercentage)
     };
 
     // Draw Background.
     m_drawBackground(
+        renderScale,
         floorStartPosition,
         renderWidth,
-        renderHeight,
-        renderScale
+        renderHeight
     );
 
 
     // Draw entities.
     m_player->draw(
-        floorStartPosition,
         renderScale,
+        floorStartPosition,
         m_assetManager
     );
 
@@ -148,11 +153,12 @@ void Game::m_draw() {
 }
 
 void Game::m_drawBackground(
+    float renderScale,
     int floorStartPosition,
     int renderWidth,
-    int renderHeight,
-    float renderScale
+    int renderHeight
 ) {
+    std::cout << "Render scale: " << renderScale << '\n';
     // Draw sky background.
     DrawRectangleGradientV(
         0,
@@ -164,11 +170,18 @@ void Game::m_drawBackground(
         );
 
     // Draw dirt floor.
-    Texture2D& dirtTexture{ m_assetManager->requestTexture(Assets::Texture::dirt) };
+    Texture2D& dirtTexture{
+        m_assetManager->requestTexture(Assets::Texture::dirt)
+    };
 
     int scaledTileSize{ static_cast<int>(dirtTexture.width * renderScale) };
 
-    int tileColumnCount{ (renderWidth / scaledTileSize) + 1 };
+    int tileColumnCount{
+        (
+            (renderWidth + (int)std::ceil(m_groundOffset))
+            / scaledTileSize
+        ) + 1
+    };
     int tileRowCount{
         (
             (renderHeight - floorStartPosition)
@@ -181,8 +194,12 @@ void Game::m_drawBackground(
             DrawTextureEx(
                 dirtTexture,
                 {
-                    static_cast<float>(x * scaledTileSize) - (m_groundOffset * renderScale),
-                    static_cast<float>(floorStartPosition + (y * scaledTileSize))
+                    static_cast<float>(
+                        (x * scaledTileSize) - (m_groundOffset * renderScale)
+                    ),
+                    static_cast<float>(
+                        floorStartPosition + (y * scaledTileSize)
+                    )
                 },
                 0,
                 renderScale,
