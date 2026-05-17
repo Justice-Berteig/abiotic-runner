@@ -5,7 +5,6 @@ Player class.
 #pragma once
 
 #include "asset_manager.hpp"
-#include "type_aliases.hpp"
 
 #include <memory>
 
@@ -15,7 +14,7 @@ public:
     Player();
     ~Player();
 
-    void tick(TimeMicroseconds deltaTime);
+    void tick(double deltaTime);
     void draw(
         float                          renderScale,
         int                            floorStartPosition,

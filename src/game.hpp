@@ -31,10 +31,10 @@ class Game {
 
         /*
          * Tick function for processing every game tick.
-         * Takes an argument `deltaTime` that represents the time in microseconds
+         * Takes an argument `deltaTime` that represents the time in seconds
          * since the last tick.
          */
-        void m_tick(TimeMicroseconds deltaTime);
+        void m_tick(double deltaTime);
 
         /*
          * Draw function for drawing every frame.

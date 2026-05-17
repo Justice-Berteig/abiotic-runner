@@ -4,8 +4,6 @@ Implementations for Player class.
 
 #include "player.hpp"
 
-#include "type_aliases.hpp"
-
 #include "raylib.h"
 
 
@@ -19,15 +17,15 @@ Player::Player()
 Player::~Player() {}
 
 
-void Player::tick(TimeMicroseconds deltaTime) {
+void Player::tick(double deltaTime) {
     if(m_onGround && IsKeyPressed(KEY_SPACE)) {
         m_onGround = false;
         m_velY     = m_maxVelY;
     }else if(!m_onGround) {
-        m_velY -= 0.0001f * deltaTime.count();
+        m_velY -= 8 * deltaTime;
     }
 
-    m_posY += m_velY * (0.0001f * deltaTime.count());
+    m_posY += m_velY * 10 * deltaTime;
 
     if(m_posY <= 0) {
         m_posY = 0;

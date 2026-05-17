@@ -75,10 +75,10 @@ void Game::run() {
     while (!WindowShouldClose()) {
         // Calculate delta time
         TimePoint currentFrameTime{ std::chrono::steady_clock::now() };
-        TimeMicroseconds deltaTime{
+        double deltaTime{
             std::chrono::duration_cast<TimeMicroseconds>(
                 currentFrameTime - m_lastFrameTime
-            )
+            ).count() / 100000.0
         };
         m_lastFrameTime = currentFrameTime;
 
@@ -89,9 +89,12 @@ void Game::run() {
 }
 
 
-void Game::m_tick(TimeMicroseconds deltaTime) {
-    m_groundOffset += 0.0001f * deltaTime.count();
+void Game::m_tick(double deltaTime) {
+    // Update ground offset.
+    m_groundOffset += 10 * deltaTime;
     while(m_groundOffset > 32.0f) m_groundOffset -= 32.0f;
+
+    // Process player tick.
     m_player->tick(deltaTime);
 }
 
@@ -140,7 +143,6 @@ void Game::m_draw() {
         renderWidth,
         renderHeight
     );
-
 
     // Draw entities.
     m_player->draw(
