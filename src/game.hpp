@@ -1,6 +1,7 @@
 #pragma once
 
 #include "asset_manager.hpp"
+#include "background.hpp"
 #include "player.hpp"
 #include "type_aliases.hpp"
 
@@ -18,8 +19,6 @@ class Game {
         void run();
 
     private:
-        float m_groundOffset;
-
         /*
         Store the last frame time so that the time between frames can be
         calculated.
@@ -27,6 +26,7 @@ class Game {
         TimePoint m_lastFrameTime;
 
         std::unique_ptr<AssetManager> m_assetManager;
+        std::unique_ptr<Background>   m_background;
         std::unique_ptr<Player>       m_player;
 
         /*

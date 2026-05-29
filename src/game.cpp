@@ -7,15 +7,14 @@
 #include "raylib.h"
 
 #include <chrono>
-#include <cmath>
 #include <iostream>
 #include <memory>
 
 
 Game::Game()
-    : m_groundOffset(0.0f)
+    : m_assetManager(std::make_unique<AssetManager>())
+    , m_background(std::make_unique<Background>())
     , m_lastFrameTime(std::chrono::steady_clock::now())
-    , m_assetManager(std::make_unique<AssetManager>())
     , m_player(std::make_unique<Player>())
 {
     // Initialize window and set some flags.
@@ -90,9 +89,8 @@ void Game::run() {
 
 
 void Game::m_tick(double deltaTime) {
-    // Update ground offset.
-    m_groundOffset += 10 * deltaTime;
-    while(m_groundOffset > 32.0f) m_groundOffset -= 32.0f;
+    // Process background tick.
+    m_background->tick(deltaTime);
 
     // Process player tick.
     m_player->tick(deltaTime);
@@ -137,11 +135,12 @@ void Game::m_draw() {
     };
 
     // Draw Background.
-    m_drawBackground(
+    m_background->draw(
         renderScale,
         floorStartPosition,
         renderWidth,
-        renderHeight
+        renderHeight,
+        m_assetManager
     );
 
     // Draw entities.
@@ -152,61 +151,4 @@ void Game::m_draw() {
     );
 
     EndDrawing();
-}
-
-void Game::m_drawBackground(
-    float renderScale,
-    int floorStartPosition,
-    int renderWidth,
-    int renderHeight
-) {
-    std::cout << "Render scale: " << renderScale << '\n';
-    // Draw sky background.
-    DrawRectangleGradientV(
-        0,
-        0,
-        renderWidth,
-        renderHeight,
-        Globals::skyStartColour,
-        Globals::skyEndColour
-        );
-
-    // Draw dirt floor.
-    Texture2D& dirtTexture{
-        m_assetManager->requestTexture(Assets::Texture::dirt)
-    };
-
-    int scaledTileSize{ static_cast<int>(dirtTexture.width * renderScale) };
-
-    int tileColumnCount{
-        (
-            (renderWidth + (int)std::ceil(m_groundOffset))
-            / scaledTileSize
-        ) + 1
-    };
-    int tileRowCount{
-        (
-            (renderHeight - floorStartPosition)
-            / scaledTileSize
-        ) + 1
-    };
-
-    for(int y{ 0 }; y < tileRowCount; ++y) {
-        for(int x{ 0 }; x < tileColumnCount; ++x) {
-            DrawTextureEx(
-                dirtTexture,
-                {
-                    static_cast<float>(
-                        (x * scaledTileSize) - (m_groundOffset * renderScale)
-                    ),
-                    static_cast<float>(
-                        floorStartPosition + (y * scaledTileSize)
-                    )
-                },
-                0,
-                renderScale,
-                WHITE
-            );
-        }
-    }
 }

@@ -33,12 +33,14 @@ add_executable(
     src/asset_manager.cpp
     src/asset_manager.hpp
     src/assets.hpp
-    src/type_aliases.hpp
-    src/main.cpp
+    src/background.cpp
+    src/background.hpp
     src/game.cpp
     src/game.hpp
+    src/main.cpp
     src/player.cpp
     src/player.hpp
+    src/type_aliases.hpp
 )
 target_sources(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCES})
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_INCLUDE})

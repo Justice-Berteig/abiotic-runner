@@ -1,33 +1,30 @@
 /*
-Player class.
+Class to represent the game background.
+This includes the sky as well as the ground.
 */
 
 #pragma once
 
 #include "asset_manager.hpp"
 
-#include <cstdint>
 #include <memory>
 
 
-class Player {
+class Background {
     public:
-        Player();
-        ~Player();
+        Background();
+        ~Background();
 
         void tick(double deltaTime);
         void draw(
             float                          renderScale,
             int                            floorStartPosition,
+            int                            renderWidth,
+            int                            renderHeight,
             std::unique_ptr<AssetManager>& assetManager
         );
 
     private:
-        static constexpr uint8_t m_maxHealth{ 5 };
-        static constexpr float   m_maxVelY  { 10.0f };
-
-        bool    m_onGround;
-        uint8_t m_health;
-        float   m_posY;
-        float   m_velY;
+        float m_groundMoveSpeed;
+        float m_groundOffset;
 };
