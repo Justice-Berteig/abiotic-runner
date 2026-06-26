@@ -12,7 +12,7 @@ Definitions for Background class functions.
 
 
 Background::Background()
-    : m_groundMoveSpeed(10.0f)
+    : m_groundMoveSpeed(100.0f)
     , m_groundOffset(0.0f)
 {}
 

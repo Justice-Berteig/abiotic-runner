@@ -23,8 +23,9 @@ class Player {
         );
 
     private:
-        static constexpr uint8_t m_maxHealth{ 5 };
-        static constexpr float   m_maxVelY  { 10.0f };
+        static constexpr float   m_gravityAcceleration{ 11.6f };
+        static constexpr float   m_jumpVelocity       { 16.8f };
+        static constexpr uint8_t m_maxHealth          { 5 };
 
         bool    m_onGround;
         uint8_t m_health;

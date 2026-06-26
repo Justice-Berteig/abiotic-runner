@@ -35,6 +35,8 @@ add_executable(
     src/assets.hpp
     src/background.cpp
     src/background.hpp
+    src/enemy.cpp
+    src/enemy.hpp
     src/game.cpp
     src/game.hpp
     src/main.cpp

@@ -19,10 +19,12 @@ Player::~Player() {}
 
 void Player::tick(double deltaTime) {
     if(m_onGround && IsKeyPressed(KEY_SPACE)) {
+        // If on ground and spacebar pressed, apply jump.
         m_onGround = false;
-        m_velY     = m_maxVelY;
+        m_velY     = m_jumpVelocity;
     }else if(!m_onGround) {
-        m_velY -= 8 * deltaTime;
+        // Aplly gravity if not on ground.
+        m_velY -= m_gravityAcceleration * deltaTime;
     }
 
     m_posY += m_velY * 10 * deltaTime;

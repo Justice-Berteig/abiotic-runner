@@ -14,6 +14,7 @@
 Game::Game()
     : m_assetManager(std::make_unique<AssetManager>())
     , m_background(std::make_unique<Background>())
+    , m_enemies()
     , m_lastFrameTime(std::chrono::steady_clock::now())
     , m_player(std::make_unique<Player>())
 {
@@ -77,7 +78,7 @@ void Game::run() {
         double deltaTime{
             std::chrono::duration_cast<TimeMicroseconds>(
                 currentFrameTime - m_lastFrameTime
-            ).count() / 100000.0
+            ).count() / 1000000.0
         };
         m_lastFrameTime = currentFrameTime;
 
@@ -89,11 +90,23 @@ void Game::run() {
 
 
 void Game::m_tick(double deltaTime) {
+    if(m_timeToSpawn >= 0.0) m_timeToSpawn -= deltaTime;
+    else {
+        std::cout << "ADDED ENEMY\n";
+        m_enemies.emplace_back(new Enemy());
+        m_timeToSpawn = 3.0;
+    }
+
     // Process background tick.
     m_background->tick(deltaTime);
 
     // Process player tick.
     m_player->tick(deltaTime);
+
+    // Process enemy ticks
+    for(int i = 0; i < m_enemies.size(); i++) {
+        m_enemies[i]->tick(deltaTime);
+    }
 }
 
 
@@ -149,6 +162,14 @@ void Game::m_draw() {
         floorStartPosition,
         m_assetManager
     );
+
+    for(int i = 0; i < m_enemies.size(); i++) {
+        m_enemies[i]->draw(
+            renderScale,
+            floorStartPosition,
+            m_assetManager
+        );
+    }
 
     EndDrawing();
 }

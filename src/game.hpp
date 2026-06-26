@@ -2,6 +2,7 @@
 
 #include "asset_manager.hpp"
 #include "background.hpp"
+#include "enemy.hpp"
 #include "player.hpp"
 #include "type_aliases.hpp"
 
@@ -25,9 +26,12 @@ class Game {
         */
         TimePoint m_lastFrameTime;
 
-        std::unique_ptr<AssetManager> m_assetManager;
-        std::unique_ptr<Background>   m_background;
-        std::unique_ptr<Player>       m_player;
+        double m_timeToSpawn = 2.0;
+
+        std::unique_ptr<AssetManager>       m_assetManager;
+        std::unique_ptr<Background>         m_background;
+        std::vector<std::unique_ptr<Enemy>> m_enemies;
+        std::unique_ptr<Player>             m_player;
 
         /*
          * Tick function for processing every game tick.
