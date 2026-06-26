@@ -6,6 +6,8 @@ Class for enemies.
 
 #include "asset_manager.hpp"
 
+#include <raylib.h>
+
 #include <memory>
 
 
@@ -20,6 +22,11 @@ class Enemy {
             int                            floorStartPosition,
             std::unique_ptr<AssetManager>& assetManager
         );
+
+        /*
+        Public function for getting the collider of this enemy.
+        */
+        Rectangle getCollider() const;
 
         bool isDead;
 

@@ -92,7 +92,7 @@ void Game::run() {
 void Game::m_tick(double deltaTime) {
     if(m_timeToSpawn >= 0.0) m_timeToSpawn -= deltaTime;
     else {
-        std::cout << "ADDED ENEMY\n";
+        std::cout << "[Game]: added enemy.\n";
         m_enemies.emplace_back(new Enemy());
         m_timeToSpawn = 3.0;
     }
@@ -103,9 +103,11 @@ void Game::m_tick(double deltaTime) {
     // Process player tick.
     m_player->tick(deltaTime);
 
-    // Process enemy ticks
+    // Process enemy ticks and check for collisions.
     for(int i = 0; i < m_enemies.size(); i++) {
         m_enemies[i]->tick(deltaTime);
+
+        if(m_player->isCollidingWith(m_enemies[i])) m_restart();
     }
 }
 
@@ -156,13 +158,14 @@ void Game::m_draw() {
         m_assetManager
     );
 
-    // Draw entities.
+    // Draw player.
     m_player->draw(
         renderScale,
         floorStartPosition,
         m_assetManager
     );
 
+    // Draw enemies.
     for(int i = 0; i < m_enemies.size(); i++) {
         m_enemies[i]->draw(
             renderScale,
@@ -172,4 +175,14 @@ void Game::m_draw() {
     }
 
     EndDrawing();
+}
+
+
+void Game::m_restart() {
+    m_background    = std::make_unique<Background>();
+    m_enemies.clear();
+    m_lastFrameTime = std::chrono::steady_clock::now();
+    m_player        = std::make_unique<Player>();
+
+    std::cout << "[Game]: restarted.\n";
 }

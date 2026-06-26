@@ -4,8 +4,6 @@ Implementation of Enemy class members.
 
 #include "enemy.hpp"
 
-#include "raylib.h"
-
 
 Enemy::Enemy()
     : isDead(false)
@@ -34,4 +32,14 @@ void Enemy::draw(
     int height{ (int)(32 * renderScale) };
 
     DrawRectangle((int)(m_xPos * renderScale), floorStartPosition - height, width, height, RED);
+}
+
+
+Rectangle Enemy::getCollider() const {
+    return {
+        m_xPos - 16.0f,
+        -16.0f,
+        32.0f,
+        32.0f
+    };
 }

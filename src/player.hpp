@@ -5,6 +5,7 @@ Player class.
 #pragma once
 
 #include "asset_manager.hpp"
+#include "enemy.hpp"
 
 #include <cstdint>
 #include <memory>
@@ -22,9 +23,15 @@ class Player {
             std::unique_ptr<AssetManager>& assetManager
         );
 
+        /*
+        Method to check for collisions with an enemy.
+        */
+        bool isCollidingWith(const std::unique_ptr<Enemy>& enemy);
+
     private:
-        static constexpr float   m_gravityAcceleration{ 11.6f };
-        static constexpr float   m_jumpVelocity       { 16.8f };
+        static constexpr float   m_gravityAcceleration{ 24.6f };
+        static constexpr float   m_jumpVelocity       { 22.8f };
+        static constexpr float   m_posX               { 32.0f };
         static constexpr uint8_t m_maxHealth          { 5 };
 
         bool    m_onGround;

@@ -49,7 +49,7 @@ void Player::draw(
         playerSprite,
         {0, 0, (float)playerSprite.width, (float)playerSprite.height},
         {
-            32 * renderScale,
+            m_posX * renderScale,
             (floorStartPosition - (m_posY * renderScale)) - (32 * renderScale),
             playerSprite.width * renderScale,
             playerSprite.height * renderScale
@@ -58,4 +58,25 @@ void Player::draw(
         0.0f,
         WHITE
     );
+}
+
+
+bool Player::isCollidingWith(const std::unique_ptr<Enemy>& enemy) {
+    Rectangle enemyCollider{ enemy->getCollider() };
+    Rectangle playerCollider{
+        m_posX - 16.0f,
+        m_posY - 16.0f,
+        32.0f,
+        32.0f
+    };
+
+    if(
+        enemyCollider.x <= playerCollider.x + playerCollider.width
+        && playerCollider.x <= enemyCollider.x + enemyCollider.width
+        && enemyCollider.y <= playerCollider.y + playerCollider.height
+        && playerCollider.y <= enemyCollider.y + enemyCollider.height
+    )
+        return true;
+    else
+        return false;
 }

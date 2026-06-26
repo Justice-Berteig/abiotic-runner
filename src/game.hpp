@@ -1,3 +1,7 @@
+/*
+Class to represent and handle the full game.
+*/
+
 #pragma once
 
 #include "asset_manager.hpp"
@@ -15,8 +19,8 @@ class Game {
         ~Game();
 
         /*
-         * Run method starts the game and controls the game loop.
-         */
+        Run method starts the game and controls the game loop.
+        */
         void run();
 
     private:
@@ -34,20 +38,19 @@ class Game {
         std::unique_ptr<Player>             m_player;
 
         /*
-         * Tick function for processing every game tick.
-         * Takes an argument `deltaTime` that represents the time in seconds
-         * since the last tick.
-         */
+        Tick function for processing every game tick.
+        Takes an argument `deltaTime` that represents the time in seconds
+        since the last tick.
+        */
         void m_tick(double deltaTime);
 
         /*
-         * Draw function for drawing every frame.
-         */
+        Draw function for drawing every frame.
+        */
         void m_draw();
-        void m_drawBackground(
-            float renderScale,
-            int   floorStartPosition,
-            int   renderWidth,
-            int   renderHeight
-        );
+
+        /*
+        Restart function for when the player dies.
+        */
+        void m_restart();
 };
