@@ -16,7 +16,7 @@ class Player {
         Player();
         ~Player();
 
-        void tick(double deltaTime);
+        void tick(float deltaTime);
         void draw(
             float                          renderScale,
             int                            floorStartPosition,

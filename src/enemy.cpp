@@ -10,15 +10,14 @@ Enemy::Enemy()
     , m_distanceAboveGround(0.0f)
     , m_moveSpeed(100.0f)
     , m_xPos(500.0f)
-{
-}
+{}
 
 
 Enemy::~Enemy() {
 }
 
 
-void Enemy::tick(double deltaTime) {
+void Enemy::tick(float deltaTime) {
     m_xPos -= m_moveSpeed * deltaTime;
 }
 

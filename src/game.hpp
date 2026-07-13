@@ -30,7 +30,7 @@ class Game {
         */
         TimePoint m_lastFrameTime;
 
-        double m_timeToSpawn = 2.0;
+        float m_timeToSpawn = 2.0;
 
         std::unique_ptr<AssetManager>       m_assetManager;
         std::unique_ptr<Background>         m_background;
@@ -42,7 +42,7 @@ class Game {
         Takes an argument `deltaTime` that represents the time in seconds
         since the last tick.
         */
-        void m_tick(double deltaTime);
+        void m_tick(float deltaTime);
 
         /*
         Draw function for drawing every frame.

@@ -13,10 +13,8 @@ namespace Assets {
         player
     };
 
-    constexpr const char* getPathForTexture(Texture texture)
-    {
-        switch(texture)
-        {
+    constexpr const char* getPathForTexture(Texture texture) {
+        switch(texture) {
             case Texture::dirt:
                 return "../resources/dirt.png";
             case Texture::player:

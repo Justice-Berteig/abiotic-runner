@@ -16,7 +16,7 @@ class Enemy {
         Enemy();
         ~Enemy();
 
-        void tick(double deltaTime);
+        void tick(float deltaTime);
         void draw(
             float                          renderScale,
             int                            floorStartPosition,

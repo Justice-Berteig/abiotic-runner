@@ -17,7 +17,7 @@ Player::Player()
 Player::~Player() {}
 
 
-void Player::tick(double deltaTime) {
+void Player::tick(float deltaTime) {
     if(m_onGround && IsKeyPressed(KEY_SPACE)) {
         // If on ground and spacebar pressed, apply jump.
         m_onGround = false;

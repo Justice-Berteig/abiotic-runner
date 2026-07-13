@@ -75,10 +75,10 @@ void Game::run() {
     while (!WindowShouldClose()) {
         // Calculate delta time
         TimePoint currentFrameTime{ std::chrono::steady_clock::now() };
-        double deltaTime{
+        float deltaTime{
             std::chrono::duration_cast<TimeMicroseconds>(
                 currentFrameTime - m_lastFrameTime
-            ).count() / 1000000.0
+            ).count() / 1000000.0f
         };
         m_lastFrameTime = currentFrameTime;
 
@@ -89,7 +89,7 @@ void Game::run() {
 }
 
 
-void Game::m_tick(double deltaTime) {
+void Game::m_tick(float deltaTime) {
     if(m_timeToSpawn >= 0.0) m_timeToSpawn -= deltaTime;
     else {
         std::cout << "[Game]: added enemy.\n";
