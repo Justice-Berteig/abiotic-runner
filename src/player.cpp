@@ -23,7 +23,7 @@ void Player::tick(float deltaTime) {
         m_onGround = false;
         m_velY     = m_jumpVelocity;
     }else if(!m_onGround) {
-        // Aplly gravity if not on ground.
+        // Apply gravity if not on ground.
         m_velY -= m_gravityAcceleration * deltaTime;
     }
 
@@ -71,10 +71,10 @@ bool Player::isCollidingWith(const std::unique_ptr<Enemy>& enemy) {
     };
 
     if(
-        enemyCollider.x <= playerCollider.x + playerCollider.width
-        && playerCollider.x <= enemyCollider.x + enemyCollider.width
-        && enemyCollider.y <= playerCollider.y + playerCollider.height
-        && playerCollider.y <= enemyCollider.y + enemyCollider.height
+           enemyCollider.x  <= playerCollider.x + playerCollider.width
+        && playerCollider.x <= enemyCollider.x  + enemyCollider.width
+        && enemyCollider.y  <= playerCollider.y + playerCollider.height
+        && playerCollider.y <= enemyCollider.y  + enemyCollider.height
     )
         return true;
     else

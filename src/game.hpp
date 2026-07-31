@@ -30,7 +30,7 @@ class Game {
         */
         TimePoint m_lastFrameTime;
 
-        float m_timeToSpawn = 2.0;
+        float m_timeToSpawn = 2.0f;
 
         std::unique_ptr<AssetManager>       m_assetManager;
         std::unique_ptr<Background>         m_background;

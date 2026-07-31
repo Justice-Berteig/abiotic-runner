@@ -27,8 +27,13 @@ class Background {
         );
 
     private:
-        static constexpr float s_maxSecondsBetweenClouds{ 8.4 };
-        static constexpr float s_minSecondsBetweenClouds{ 1.5 };
+        static constexpr float s_maxSecondsBetweenClouds{ 26.4 };
+        static constexpr float s_minSecondsBetweenClouds{ 8.5 };
+
+        static constexpr float s_minCloudSpawnX{};
+        static constexpr float s_maxCloudSpawnX{};
+        static constexpr float s_minCloudSpawnY{};
+        static constexpr float s_maxCloudSpawnY{};
 
         /*
         Get a random number between s_maxSecondsBetweenClouds and
@@ -36,6 +41,11 @@ class Background {
         next cloud will spawn.
         */
         static float s_getSecondsToCloudSpawn();
+
+        /*
+        Get a random 
+        */
+        static Vector2 s_getRandomCloudSpawnPosition();
 
         std::vector<Cloud> m_clouds;
         float              m_groundMoveSpeed;

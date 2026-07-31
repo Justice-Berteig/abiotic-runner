@@ -7,6 +7,8 @@
 #include "raylib.h"
 
 #include <chrono>
+#include <cstdlib>
+#include <ctime>
 #include <iostream>
 #include <memory>
 
@@ -18,6 +20,9 @@ Game::Game()
     , m_lastFrameTime(std::chrono::steady_clock::now())
     , m_player(std::make_unique<Player>())
 {
+    // Set seed for random number generator
+    std::srand(std::time({}));
+
     // Initialize window and set some flags.
     InitWindow(
         Globals::minScreenWidth,
@@ -37,7 +42,7 @@ Game::Game()
 
     unsigned windowScale{ 2 };
     while(
-        monitorWidth     > (Globals::minScreenWidth * windowScale)
+           monitorWidth  > (Globals::minScreenWidth * windowScale)
         && monitorHeight > (Globals::minScreenHeight * windowScale)
     ) {
         ++windowScale;
@@ -122,10 +127,10 @@ void Game::m_draw() {
 
     // Force resize window if too small.
     if(
-        renderWidth < Globals::minScreenWidth
+           renderWidth  < Globals::minScreenWidth
         || renderHeight < Globals::minScreenHeight
     ) {
-        int newScreenWidth{ renderWidth };
+        int newScreenWidth { renderWidth };
         int newScreenHeight{ renderHeight };
         if(renderWidth < Globals::minScreenWidth) {
             newScreenWidth = Globals::minScreenWidth;

@@ -9,6 +9,7 @@ Definitions for Background class functions.
 #include "raylib.h"
 
 #include <cmath>
+#include <cstdlib>
 
 
 Background::Background()
@@ -17,8 +18,8 @@ Background::Background()
     , m_groundOffset(0.0f)
     , m_secondsToCloudSpawn(s_getSecondsToCloudSpawn())
 {
-    m_clouds.emplace_back(100.0f, 40.0f, Assets::Texture::dirt);
-    m_clouds.emplace_back(380.0f, 180.0f, Assets::Texture::dirt);
+    m_clouds.emplace_back(100.0f, 40.0f);
+    m_clouds.emplace_back(380.0f, 180.0f);
 }
 
 
@@ -31,7 +32,7 @@ void Background::tick(float deltaTime) {
     else {
         float overflow{ m_secondsToCloudSpawn };
         m_secondsToCloudSpawn = s_getSecondsToCloudSpawn() + overflow;
-        m_clouds.emplace_back(1.0f, 1.0f, Assets::Texture::dirt);
+        m_clouds.emplace_back(1.0f, 1.0f);
     }
  
     // Update ground offset.
@@ -61,6 +62,24 @@ void Background::draw(
         Globals::skyStartColour,
         Globals::skyEndColour
         );
+
+    // Draw clouds.
+    Texture2D cloudTexture{
+        assetManager->requestTexture(Cloud::texture)
+    };
+
+    for(const Cloud& cloud : m_clouds) {
+        DrawTextureEx(
+            cloudTexture,
+            {
+                cloud.position.x * renderScale,
+                floorStartPosition - (cloud.position.y * renderScale),
+            },
+            0,
+            renderScale,
+            WHITE
+        );
+    }
 
     // Draw dirt floor.
     Texture2D& dirtTexture{
@@ -100,20 +119,9 @@ void Background::draw(
             );
         }
     }
-
-    // Draw clouds.
-    for(const Cloud& cloud : m_clouds) {
-        DrawRectangle(
-            cloud.position.x * renderScale,
-            floorStartPosition - (cloud.position.y * renderScale),
-            10 * renderScale,
-            10 * renderScale,
-            WHITE
-        );
-    }
 }
 
 
 float Background::s_getSecondsToCloudSpawn() {
-    return 3.0;
+    return (float)(rand()) / (float)(rand());
 }
