@@ -14,11 +14,10 @@ Definitions for Background class functions.
 
 Background::Background()
     : m_clouds()
-    , m_groundMoveSpeed(100.0f)
     , m_groundOffset(0.0f)
     , m_secondsToCloudSpawn(s_getSecondsToCloudSpawn())
 {
-    m_clouds.emplace_back(100.0f, 40.0f);
+    m_clouds.emplace_back(100.0f, 124.0f);
     m_clouds.emplace_back(380.0f, 180.0f);
 }
 
@@ -32,16 +31,16 @@ void Background::tick(float deltaTime) {
     else {
         float overflow{ m_secondsToCloudSpawn };
         m_secondsToCloudSpawn = s_getSecondsToCloudSpawn() + overflow;
-        m_clouds.emplace_back(1.0f, 1.0f);
+        m_clouds.emplace_back(s_cloudSpawnX, s_getRandomCloudSpawnPosition());
     }
  
     // Update ground offset.
-    m_groundOffset += m_groundMoveSpeed * deltaTime;
+    m_groundOffset += s_groundMoveSpeed * deltaTime;
     while(m_groundOffset > 32.0f) m_groundOffset -= 32.0f;
 
     // Update cloud positions.
     for(Cloud& cloud : m_clouds) {
-        cloud.position.x -= deltaTime;
+        cloud.position.x -= s_cloudMoveSpeed * deltaTime;
     }
 }
 
@@ -123,5 +122,12 @@ void Background::draw(
 
 
 float Background::s_getSecondsToCloudSpawn() {
-    return (float)(rand()) / (float)(rand());
+    return (((float)rand() / RAND_MAX) * s_rangeSecondsBetweenClouds)
+        + s_minSecondsBetweenClouds;
+}
+
+
+float Background::s_getRandomCloudSpawnPosition() {
+    return (((float)rand() / RAND_MAX) * s_rangeCloudSpawnY)
+            + s_minCloudSpawnY;
 }
