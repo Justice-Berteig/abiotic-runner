@@ -38,11 +38,15 @@ class Game {
         std::unique_ptr<Player>             m_player;
 
         /*
-        Tick function for processing every game tick.
-        Takes an argument `deltaTime` that represents the time in seconds
-        since the last tick.
+        Function calls the tick and draw functions.
+        Required for web build.
         */
-        void m_tick(float deltaTime);
+        void m_tickAndDraw();
+
+        /*
+        Tick function for processing every game tick.
+        */
+        void m_tick();
 
         /*
         Draw function for drawing every frame.

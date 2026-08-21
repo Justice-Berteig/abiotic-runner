@@ -27,7 +27,7 @@ Background::~Background() {}
 
 void Background::tick(float deltaTime) {
     // Handle cloud spawning.
-    if(m_secondsToCloudSpawn > 0.0) m_secondsToCloudSpawn -= deltaTime;
+    if(m_secondsToCloudSpawn > 0.0f) m_secondsToCloudSpawn -= deltaTime;
     else {
         float overflow{ m_secondsToCloudSpawn };
         m_secondsToCloudSpawn = s_getSecondsToCloudSpawn() + overflow;
@@ -89,13 +89,13 @@ void Background::draw(
 
     int tileColumnCount{
         (
-            (renderWidth + (int)std::ceil(m_groundOffset))
+              (renderWidth + (int)std::ceil(m_groundOffset))
             / scaledTileSize
         ) + 1
     };
     int tileRowCount{
         (
-            (renderHeight - floorStartPosition)
+              (renderHeight - floorStartPosition)
             / scaledTileSize
         ) + 1
     };

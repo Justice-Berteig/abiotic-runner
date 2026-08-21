@@ -27,8 +27,8 @@ class Background {
         );
 
     private:
-        static constexpr float s_maxSecondsBetweenClouds{ 26.4 };
-        static constexpr float s_minSecondsBetweenClouds{ 8.5 };
+        static constexpr float s_maxSecondsBetweenClouds{ 26.4f };
+        static constexpr float s_minSecondsBetweenClouds{  8.5f };
         static constexpr float s_rangeSecondsBetweenClouds{
             s_maxSecondsBetweenClouds - s_minSecondsBetweenClouds
         };

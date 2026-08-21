@@ -4,6 +4,10 @@
 #include "globals.hpp"
 #include "type_aliases.hpp"
 
+#if defined(PLATFORM_WEB)
+    #include <emscripten/emscripten.h>
+#endif
+
 #include "raylib.h"
 
 #include <chrono>
@@ -76,25 +80,34 @@ Game::~Game() {
 
 
 void Game::run() {
-    // Main game loop
+#if defined(PLATFORM_WEB)
+    // Let emscripten handle main loop for web build.
+    emscripten_set_main_loop(m_updateDrawFrame, 0, 1);
+#else
     while (!WindowShouldClose()) {
-        // Calculate delta time
-        TimePoint currentFrameTime{ std::chrono::steady_clock::now() };
-        float deltaTime{
-            std::chrono::duration_cast<TimeMicroseconds>(
-                currentFrameTime - m_lastFrameTime
-            ).count() / 1000000.0f
-        };
-        m_lastFrameTime = currentFrameTime;
-
-        m_tick(deltaTime);
-
-        m_draw();
+        m_tickAndDraw();
     }
+#endif
 }
 
 
-void Game::m_tick(float deltaTime) {
+void Game::m_tickAndDraw()
+{
+    m_tick();
+    m_draw();
+}
+
+
+void Game::m_tick() {
+    // Calculate delta time
+    TimePoint currentFrameTime{ std::chrono::steady_clock::now() };
+    float deltaTime{
+        std::chrono::duration_cast<TimeMicroseconds>(
+            currentFrameTime - m_lastFrameTime
+        ).count() / 1000000.0f
+    };
+    m_lastFrameTime = currentFrameTime;
+
     if(m_timeToSpawn >= 0.0) m_timeToSpawn -= deltaTime;
     else {
         std::cout << "[Game]: added enemy.\n";
@@ -146,9 +159,9 @@ void Game::m_draw() {
     ClearBackground(RAYWHITE);
 
     // Determine important variables for rendering.
-    int tileWidth{ 
-        m_assetManager->requestTexture(Assets::Texture::dirt).width
-    };
+    int tileWidth{ static_cast<int>(
+        Assets::getDimensionsForTexture(Assets::Texture::dirt).x
+    )};
     int renderScale{ (renderWidth / tileWidth) / Globals::minTileColumns };
     int floorStartPosition{
         static_cast<int>(renderHeight * Globals::skyScreenPercentage)
