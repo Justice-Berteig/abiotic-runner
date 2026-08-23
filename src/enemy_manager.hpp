@@ -6,7 +6,6 @@ Used to spawn and keep track of all enemies.
 
 #include "enemy.hpp"
 
-#include <memory>
 #include <vector>
 
 
@@ -17,14 +16,14 @@ class EnemyManager {
 
         void tick(float deltaTime);
         void draw(
-            float                          renderScale,
-            int                            floorStartPosition,
-            std::unique_ptr<AssetManager>& assetManager
+            float         renderScale,
+            int           floorStartPosition,
+            AssetManager& assetManager
         );
 
     private:
-        static constexpr float s_maxSecondsBetweenEnemies{ 12.0f };
-        static constexpr float s_minSecondsBetweenEnemies{  3.0f };
+        static constexpr float s_maxSecondsBetweenEnemies{ 3.0f };
+        static constexpr float s_minSecondsBetweenEnemies{  1.5f };
         static constexpr float s_rangeSecondsBetweenEnemies{
             s_maxSecondsBetweenEnemies - s_minSecondsBetweenEnemies
         };

@@ -8,8 +8,6 @@ Class for enemies.
 
 #include <raylib.h>
 
-#include <memory>
-
 
 class Enemy {
     public:
@@ -18,9 +16,9 @@ class Enemy {
 
         void tick(float deltaTime);
         void draw(
-            float                          renderScale,
-            int                            floorStartPosition,
-            std::unique_ptr<AssetManager>& assetManager
+            float         renderScale,
+            int           floorStartPosition,
+            AssetManager& assetManager
         );
 
         /*

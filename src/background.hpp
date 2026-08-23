@@ -8,7 +8,6 @@ This includes the sky as well as the ground.
 #include "asset_manager.hpp"
 #include "cloud.hpp"
 
-#include <memory>
 #include <vector>
 
 
@@ -19,16 +18,16 @@ class Background {
 
         void tick(float deltaTime);
         void draw(
-            float                          renderScale,
-            int                            floorStartPosition,
-            int                            renderWidth,
-            int                            renderHeight,
-            std::unique_ptr<AssetManager>& assetManager
+            float         renderScale,
+            int           floorStartPosition,
+            int           renderWidth,
+            int           renderHeight,
+            AssetManager& assetManager
         );
 
     private:
-        static constexpr float s_maxSecondsBetweenClouds{ 26.4f };
-        static constexpr float s_minSecondsBetweenClouds{  8.5f };
+        static constexpr float s_maxSecondsBetweenClouds{ 85.0f };
+        static constexpr float s_minSecondsBetweenClouds{  40.0f };
         static constexpr float s_rangeSecondsBetweenClouds{
             s_maxSecondsBetweenClouds - s_minSecondsBetweenClouds
         };

@@ -8,7 +8,6 @@ Player class.
 #include "enemy.hpp"
 
 #include <cstdint>
-#include <memory>
 
 
 class Player {
@@ -18,15 +17,15 @@ class Player {
 
         void tick(float deltaTime);
         void draw(
-            float                          renderScale,
-            int                            floorStartPosition,
-            std::unique_ptr<AssetManager>& assetManager
+            float         renderScale,
+            int           floorStartPosition,
+            AssetManager& assetManager
         );
 
         /*
         Method to check for collisions with an enemy.
         */
-        bool isCollidingWith(const std::unique_ptr<Enemy>& enemy);
+        bool isCollidingWith(const Enemy& enemy);
 
     private:
         static constexpr float   m_gravityAcceleration{ 24.6f };

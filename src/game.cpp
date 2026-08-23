@@ -4,25 +4,20 @@
 #include "globals.hpp"
 #include "type_aliases.hpp"
 
-#if defined(PLATFORM_WEB)
-    #include <emscripten/emscripten.h>
-#endif
-
 #include "raylib.h"
 
 #include <chrono>
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
-#include <memory>
 
 
 Game::Game()
-    : m_assetManager(std::make_unique<AssetManager>())
-    , m_background(std::make_unique<Background>())
-    , m_enemies()
+    : m_assetManager()
+    , m_background()
+    , m_enemyManager()
     , m_lastFrameTime(std::chrono::steady_clock::now())
-    , m_player(std::make_unique<Player>())
+    , m_player()
 {
     // Set seed for random number generator
     std::srand(std::time({}));
@@ -80,21 +75,10 @@ Game::~Game() {
 
 
 void Game::run() {
-#if defined(PLATFORM_WEB)
-    // Let emscripten handle main loop for web build.
-    emscripten_set_main_loop(m_updateDrawFrame, 0, 1);
-#else
     while (!WindowShouldClose()) {
-        m_tickAndDraw();
+        m_tick();
+        m_draw();
     }
-#endif
-}
-
-
-void Game::m_tickAndDraw()
-{
-    m_tick();
-    m_draw();
 }
 
 
@@ -108,25 +92,14 @@ void Game::m_tick() {
     };
     m_lastFrameTime = currentFrameTime;
 
-    if(m_timeToSpawn >= 0.0) m_timeToSpawn -= deltaTime;
-    else {
-        std::cout << "[Game]: added enemy.\n";
-        m_enemies.emplace_back(new Enemy());
-        m_timeToSpawn = 3.0;
-    }
-
     // Process background tick.
-    m_background->tick(deltaTime);
+    m_background.tick(deltaTime);
 
     // Process player tick.
-    m_player->tick(deltaTime);
+    m_player.tick(deltaTime);
 
-    // Process enemy ticks and check for collisions.
-    for(int i = 0; i < m_enemies.size(); i++) {
-        m_enemies[i]->tick(deltaTime);
-
-        if(m_player->isCollidingWith(m_enemies[i])) m_restart();
-    }
+    // Process enemy ticks
+    m_enemyManager.tick(deltaTime);
 }
 
 
@@ -168,7 +141,7 @@ void Game::m_draw() {
     };
 
     // Draw Background.
-    m_background->draw(
+    m_background.draw(
         renderScale,
         floorStartPosition,
         renderWidth,
@@ -177,30 +150,28 @@ void Game::m_draw() {
     );
 
     // Draw player.
-    m_player->draw(
+    m_player.draw(
         renderScale,
         floorStartPosition,
         m_assetManager
     );
 
     // Draw enemies.
-    for(int i = 0; i < m_enemies.size(); i++) {
-        m_enemies[i]->draw(
-            renderScale,
-            floorStartPosition,
-            m_assetManager
-        );
-    }
+    m_enemyManager.draw(
+        renderScale,
+        floorStartPosition,
+        m_assetManager
+    );
 
     EndDrawing();
 }
 
 
 void Game::m_restart() {
-    m_background    = std::make_unique<Background>();
-    m_enemies.clear();
+    m_background    = Background();
+    m_enemyManager  = EnemyManager();
     m_lastFrameTime = std::chrono::steady_clock::now();
-    m_player        = std::make_unique<Player>();
+    m_player        = Player();
 
     std::cout << "[Game]: restarted.\n";
 }

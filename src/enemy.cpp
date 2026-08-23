@@ -23,9 +23,9 @@ void Enemy::tick(float deltaTime) {
 
 
 void Enemy::draw(
-    float                          renderScale,
-    int                            floorStartPosition,
-    std::unique_ptr<AssetManager>& assetManager
+    float         renderScale,
+    int           floorStartPosition,
+    AssetManager& assetManager
 ) {
     int width{ (int)(32 * renderScale) };
     int height{ (int)(32 * renderScale) };

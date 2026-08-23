@@ -46,11 +46,11 @@ void Background::tick(float deltaTime) {
 
 
 void Background::draw(
-    float                          renderScale,
-    int                            floorStartPosition,
-    int                            renderWidth,
-    int                            renderHeight,
-    std::unique_ptr<AssetManager>& assetManager
+    float         renderScale,
+    int           floorStartPosition,
+    int           renderWidth,
+    int           renderHeight,
+    AssetManager& assetManager
 ) {
     // Draw sky background.
     DrawRectangleGradientV(
@@ -64,7 +64,7 @@ void Background::draw(
 
     // Draw clouds.
     Texture2D cloudTexture{
-        assetManager->requestTexture(Cloud::texture)
+        assetManager.requestTexture(Cloud::texture)
     };
 
     for(const Cloud& cloud : m_clouds) {
@@ -82,7 +82,7 @@ void Background::draw(
 
     // Draw dirt floor.
     Texture2D& dirtTexture{
-        assetManager->requestTexture(Assets::Texture::dirt)
+        assetManager.requestTexture(Assets::Texture::dirt)
     };
 
     int scaledTileSize{ static_cast<int>(dirtTexture.width * renderScale) };

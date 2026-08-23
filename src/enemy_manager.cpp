@@ -6,14 +6,12 @@ Implementation for EnemyManager class members.
 
 
 EnemyManager::EnemyManager()
-{
-    m_secondsToEnemySpawn = s_getSecondsToEnemySpawn();
-}
+    : m_enemies()
+    , m_secondsToEnemySpawn(s_getSecondsToEnemySpawn())
+{}
 
 
-EnemyManager::~EnemyManager()
-{
-}
+EnemyManager::~EnemyManager() {}
 
 
 void EnemyManager::tick(float deltaTime)
@@ -23,17 +21,28 @@ void EnemyManager::tick(float deltaTime)
     else {
         float overflow{ m_secondsToEnemySpawn };
         m_secondsToEnemySpawn = s_getSecondsToEnemySpawn() + overflow;
-        //m_clouds.emplace_back(s_cloudSpawnX, s_getRandomCloudSpawnPosition());
+        m_enemies.emplace_back();
+    }
+
+    // Do tick for each enemy + check for collision with player.
+    for(Enemy& enemy : m_enemies)
+    {
+        enemy.tick(deltaTime);
     }
 }
 
 
 void EnemyManager::draw(
-    float                          renderScale,
-    int                            floorStartPosition,
-    std::unique_ptr<AssetManager>& assetManager
+    float         renderScale,
+    int           floorStartPosition,
+    AssetManager& assetManager
 )
 {
+    // Draw each enemy.
+    for(Enemy& enemy : m_enemies)
+    {
+        enemy.draw(renderScale, floorStartPosition, assetManager);
+    }
 }
 
 

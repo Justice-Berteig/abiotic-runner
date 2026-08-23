@@ -38,12 +38,12 @@ void Player::tick(float deltaTime) {
 
 
 void Player::draw(
-    float                          renderScale,
-    int                            floorStartPosition,
-    std::unique_ptr<AssetManager>& assetManager
+    float         renderScale,
+    int           floorStartPosition,
+    AssetManager& assetManager
 ) {
     Texture2D playerSprite{
-        assetManager->requestTexture(Assets::Texture::player)
+        assetManager.requestTexture(Assets::Texture::player)
     };
     DrawTexturePro(
         playerSprite,
@@ -61,8 +61,8 @@ void Player::draw(
 }
 
 
-bool Player::isCollidingWith(const std::unique_ptr<Enemy>& enemy) {
-    Rectangle enemyCollider{ enemy->getCollider() };
+bool Player::isCollidingWith(const Enemy& enemy) {
+    Rectangle enemyCollider{ enemy.getCollider() };
     Rectangle playerCollider{
         m_posX - 16.0f,
         m_posY - 16.0f,

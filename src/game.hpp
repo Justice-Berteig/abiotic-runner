@@ -6,11 +6,9 @@ Class to represent and handle the full game.
 
 #include "asset_manager.hpp"
 #include "background.hpp"
-#include "enemy.hpp"
+#include "enemy_manager.hpp"
 #include "player.hpp"
 #include "type_aliases.hpp"
-
-#include <memory>
 
 
 class Game {
@@ -30,18 +28,10 @@ class Game {
         */
         TimePoint m_lastFrameTime;
 
-        float m_timeToSpawn = 2.0f;
-
-        std::unique_ptr<AssetManager>       m_assetManager;
-        std::unique_ptr<Background>         m_background;
-        std::vector<std::unique_ptr<Enemy>> m_enemies;
-        std::unique_ptr<Player>             m_player;
-
-        /*
-        Function calls the tick and draw functions.
-        Required for web build.
-        */
-        void m_tickAndDraw();
+        AssetManager m_assetManager;
+        Background   m_background;
+        EnemyManager m_enemyManager;
+        Player       m_player;
 
         /*
         Tick function for processing every game tick.
