@@ -8,7 +8,8 @@ Implementations for Player class.
 
 
 Player::Player()
-    : m_onGround(true)
+    : isDead(false)
+    , m_onGround(true)
     , m_health(m_maxHealth)
     , m_posY(0)
 {}
@@ -61,7 +62,7 @@ void Player::draw(
 }
 
 
-bool Player::isCollidingWith(const Enemy& enemy) {
+void Player::checkCollisionWith(const Enemy& enemy) {
     Rectangle enemyCollider{ enemy.getCollider() };
     Rectangle playerCollider{
         m_posX - 16.0f,
@@ -76,7 +77,5 @@ bool Player::isCollidingWith(const Enemy& enemy) {
         && enemyCollider.y  <= playerCollider.y + playerCollider.height
         && playerCollider.y <= enemyCollider.y  + enemyCollider.height
     )
-        return true;
-    else
-        return false;
+        isDead = true;
 }

@@ -5,6 +5,7 @@ Used to spawn and keep track of all enemies.
 #pragma once
 
 #include "enemy.hpp"
+#include "player.hpp"
 
 #include <vector>
 
@@ -14,7 +15,10 @@ class EnemyManager {
         EnemyManager();
         ~EnemyManager();
 
-        void tick(float deltaTime);
+        void tick(
+            float   deltaTime,
+            Player& player
+        );
         void draw(
             float         renderScale,
             int           floorStartPosition,

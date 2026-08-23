@@ -99,7 +99,13 @@ void Game::m_tick() {
     m_player.tick(deltaTime);
 
     // Process enemy ticks
-    m_enemyManager.tick(deltaTime);
+    m_enemyManager.tick(
+        deltaTime,
+        m_player
+    );
+
+    // Restart if player died.
+    if(m_player.isDead) m_restart();
 }
 
 

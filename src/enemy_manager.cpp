@@ -14,7 +14,10 @@ EnemyManager::EnemyManager()
 EnemyManager::~EnemyManager() {}
 
 
-void EnemyManager::tick(float deltaTime)
+void EnemyManager::tick(
+    float   deltaTime,
+    Player& player
+)
 {
     // Handle enemy spawning.
     if(m_secondsToEnemySpawn > 0.0f) m_secondsToEnemySpawn -= deltaTime;
@@ -28,6 +31,8 @@ void EnemyManager::tick(float deltaTime)
     for(Enemy& enemy : m_enemies)
     {
         enemy.tick(deltaTime);
+
+        if(!player.isDead) player.checkCollisionWith(enemy);
     }
 }
 

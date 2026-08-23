@@ -22,10 +22,12 @@ class Player {
             AssetManager& assetManager
         );
 
+        bool isDead;
+
         /*
         Method to check for collisions with an enemy.
         */
-        bool isCollidingWith(const Enemy& enemy);
+        void checkCollisionWith(const Enemy& enemy);
 
     private:
         static constexpr float   m_gravityAcceleration{ 24.6f };
