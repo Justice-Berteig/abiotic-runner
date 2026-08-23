@@ -26,10 +26,8 @@ class Enemy {
         */
         Rectangle getCollider() const;
 
-        bool isDead;
+        Vector2 position;
 
     private:
-        float m_distanceAboveGround;
         float m_moveSpeed;
-        float m_xPos;
 };

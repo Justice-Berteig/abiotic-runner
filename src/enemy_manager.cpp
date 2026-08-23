@@ -27,10 +27,14 @@ void EnemyManager::tick(
     }
 
     // Do tick for each enemy + check for collision with player.
-    for(Enemy& enemy : m_enemies) {
-        enemy.tick(deltaTime);
+    for(int i{ 0 }; i < m_enemies.size(); i++) {
+        m_enemies[i].tick(deltaTime);
 
-        if(!player.isDead) player.checkCollisionWith(enemy);
+        if(!player.isDead) player.checkCollisionWith(m_enemies[i]);
+
+        // Remove enemy if off screen.
+        if(m_enemies[i].position.x < 0.0f)
+            m_enemies.erase(m_enemies.begin() + i);
     }
 }
 

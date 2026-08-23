@@ -39,8 +39,12 @@ void Background::tick(float deltaTime) {
     while(m_groundOffset > 32.0f) m_groundOffset -= 32.0f;
 
     // Update cloud positions.
-    for(Cloud& cloud : m_clouds) {
-        cloud.position.x -= s_cloudMoveSpeed * deltaTime;
+    for(int i{ 0 }; i < m_clouds.size(); i++) {
+        m_clouds[i].position.x -= s_cloudMoveSpeed * deltaTime;
+
+        // Remove cloud if off screen.
+        if(m_clouds[i].position.x < 0.0f)
+            m_clouds.erase(m_clouds.begin() + i);
     }
 }
 

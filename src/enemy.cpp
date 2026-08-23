@@ -6,10 +6,8 @@ Implementation of Enemy class members.
 
 
 Enemy::Enemy()
-    : isDead(false)
-    , m_distanceAboveGround(0.0f)
+    : position(500.0f, 0.0f)
     , m_moveSpeed(100.0f)
-    , m_xPos(500.0f)
 {}
 
 
@@ -18,7 +16,7 @@ Enemy::~Enemy() {
 
 
 void Enemy::tick(float deltaTime) {
-    m_xPos -= m_moveSpeed * deltaTime;
+    position.x -= m_moveSpeed * deltaTime;
 }
 
 
@@ -30,14 +28,20 @@ void Enemy::draw(
     int width{ (int)(32 * renderScale) };
     int height{ (int)(32 * renderScale) };
 
-    DrawRectangle((int)(m_xPos * renderScale), floorStartPosition - height, width, height, RED);
+    DrawRectangle(
+        (int)(position.x * renderScale),
+        (int)(floorStartPosition + position.y - height),
+        width,
+        height,
+        RED
+    );
 }
 
 
 Rectangle Enemy::getCollider() const {
     return {
-        m_xPos - 16.0f,
-        -16.0f,
+        position.x - 16.0f,
+        position.y -16.0f,
         32.0f,
         32.0f
     };
