@@ -48,10 +48,11 @@ void Background::tick(float deltaTime) {
 void Background::draw(
     float         renderScale,
     int           floorStartPosition,
-    int           renderWidth,
-    int           renderHeight,
     AssetManager& assetManager
 ) {
+    int renderWidth  { GetRenderWidth() };
+    int renderHeight { GetRenderHeight() };
+
     // Draw sky background.
     DrawRectangleGradientV(
         0,
@@ -89,7 +90,7 @@ void Background::draw(
 
     int tileColumnCount{
         (
-              (renderWidth + (int)std::ceil(m_groundOffset))
+              (renderWidth + (int)std::ceil(m_groundOffset * renderScale))
             / scaledTileSize
         ) + 1
     };

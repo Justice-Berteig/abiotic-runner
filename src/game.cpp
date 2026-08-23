@@ -124,15 +124,15 @@ void Game::m_draw() {
     ) {
         int newScreenWidth { renderWidth };
         int newScreenHeight{ renderHeight };
+
         if(renderWidth < Globals::minScreenWidth) {
             newScreenWidth = Globals::minScreenWidth;
         }
         if(renderHeight < Globals::minScreenHeight) {
             newScreenHeight = Globals::minScreenHeight;
         }
+
         SetWindowSize(newScreenWidth, newScreenHeight);
-        renderWidth = newScreenWidth;
-        renderHeight = newScreenHeight;
     }
 
     ClearBackground(RAYWHITE);
@@ -150,8 +150,6 @@ void Game::m_draw() {
     m_background.draw(
         renderScale,
         floorStartPosition,
-        renderWidth,
-        renderHeight,
         m_assetManager
     );
 

@@ -20,8 +20,6 @@ class Background {
         void draw(
             float         renderScale,
             int           floorStartPosition,
-            int           renderWidth,
-            int           renderHeight,
             AssetManager& assetManager
         );
 
