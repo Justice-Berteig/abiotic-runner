@@ -10,11 +10,9 @@ Struct for a cloud.
 
 
 struct Cloud {
-    Cloud(float x, float y)
-        : position({x, y})
-    {}
+    Cloud(float x, float y);
 
-    Vector2         position;
+    Vector2 position;
 
     static constexpr Assets::Texture texture{ Assets::Texture::cloud };
 };

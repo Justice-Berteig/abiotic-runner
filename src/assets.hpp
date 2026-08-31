@@ -14,11 +14,12 @@ namespace Assets {
         cloud,
         dirt,
         pest,
+        pest_move,
         player
     };
 
 
-    constexpr const char* getPathForTexture(Texture texture) {
+    static constexpr const char* getPathForTexture(Texture texture) {
         switch(texture) {
             case Texture::cloud:
                 return "../resources/cloud.png";
@@ -26,6 +27,8 @@ namespace Assets {
                 return "../resources/dirt.png";
             case Texture::pest:
                 return "../resources/pest.png";
+            case Texture::pest_move:
+                return "../resources/pest_move.png";
             case Texture::player:
                 return "../resources/player.png";
             default:
@@ -36,20 +39,32 @@ namespace Assets {
     }
 
 
-    constexpr const Vector2 getDimensionsForTexture(Texture texture) {
+    static constexpr Vector2 getDimensionsForTexture(Texture texture) {
         switch(texture) {
             case Texture::cloud:
-                return {  10,  10 };
+                return { 128,  64 };
             case Texture::dirt:
                 return {  32,  32 };
             case Texture::pest:
                 return {  32,  32 };
+            case Texture::pest_move:
+                return {  32,  32 };
             case Texture::player:
-                return { 128,  64 };
+                return {  32,  32 };
             default:
                 throw std::runtime_error(
                     "ERROR: No dimensions set for given texture."
                 );
+        }
+    }
+
+
+    static constexpr int getFrameCountInTexture(Texture texture) {
+        switch(texture) {
+            case Texture::pest_move:
+                return 10;
+            default:
+                return 1;
         }
     }
 };

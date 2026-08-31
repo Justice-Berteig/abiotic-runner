@@ -4,6 +4,7 @@ Class for enemies.
 
 #pragma once
 
+#include "animation.hpp"
 #include "asset_manager.hpp"
 
 #include <raylib.h>
@@ -29,5 +30,6 @@ class Enemy {
         Vector2 position;
 
     private:
-        float m_moveSpeed;
+        float     m_moveSpeed;
+        Animation m_animation;
 };
