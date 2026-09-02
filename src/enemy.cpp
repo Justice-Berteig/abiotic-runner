@@ -42,15 +42,6 @@ void Enemy::draw(
         floorStartPosition,
         assetManager
     );
-    /*
-    DrawRectangle(
-        (int)(position.x * renderScale),
-        (int)(floorStartPosition + position.y - height),
-        width,
-        height,
-        RED
-    );
-    */
 }
 
 
