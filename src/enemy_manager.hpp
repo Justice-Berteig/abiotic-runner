@@ -26,8 +26,8 @@ class EnemyManager {
         );
 
     private:
-        static constexpr float s_maxSecondsBetweenEnemies{ 3.0f };
-        static constexpr float s_minSecondsBetweenEnemies{  1.5f };
+        static constexpr float s_maxSecondsBetweenEnemies{ 4.8f };
+        static constexpr float s_minSecondsBetweenEnemies{  1.2f };
         static constexpr float s_rangeSecondsBetweenEnemies{
             s_maxSecondsBetweenEnemies - s_minSecondsBetweenEnemies
         };

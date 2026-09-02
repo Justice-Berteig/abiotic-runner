@@ -33,7 +33,7 @@ void EnemyManager::tick(
         if(!player.isDead) player.checkCollisionWith(m_enemies[i]);
 
         // Remove enemy if off screen.
-        if(m_enemies[i].position.x < 0.0f)
+        if(m_enemies[i].position.x < -128.0f)
             m_enemies.erase(m_enemies.begin() + i);
     }
 }

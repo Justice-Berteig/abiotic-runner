@@ -30,7 +30,7 @@ class Player {
         void checkCollisionWith(const Enemy& enemy);
 
     private:
-        static constexpr float   m_gravityAcceleration{ 24.6f };
+        static constexpr float   m_gravityAcceleration{ 34.6f };
         static constexpr float   m_jumpVelocity       { 22.8f };
         static constexpr float   m_posX               { 32.0f };
         static constexpr uint8_t m_maxHealth          { 5 };

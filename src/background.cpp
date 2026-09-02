@@ -43,7 +43,7 @@ void Background::tick(float deltaTime) {
         m_clouds[i].position.x -= s_cloudMoveSpeed * deltaTime;
 
         // Remove cloud if off screen.
-        if(m_clouds[i].position.x < 0.0f)
+        if(m_clouds[i].position.x < -256.0f)
             m_clouds.erase(m_clouds.begin() + i);
     }
 }
