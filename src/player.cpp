@@ -59,14 +59,28 @@ void Player::draw(
         0.0f,
         WHITE
     );
+
+    Rectangle hitbox{
+        m_posX,
+        m_posY,
+        32.0f,
+        32.0f
+    };
+    DrawRectangleLines(
+        hitbox.x * renderScale,
+        floorStartPosition - (hitbox.y * renderScale) - (32 * renderScale),
+        hitbox.width * renderScale,
+        hitbox.height * renderScale,
+        RED
+    );
 }
 
 
 void Player::checkCollisionWith(const Enemy& enemy) {
     Rectangle enemyCollider{ enemy.getCollider() };
     Rectangle playerCollider{
-        m_posX - 16.0f,
-        m_posY - 16.0f,
+        m_posX,
+        m_posY,
         32.0f,
         32.0f
     };

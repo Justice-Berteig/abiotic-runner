@@ -31,9 +31,6 @@ void Enemy::draw(
     int           floorStartPosition,
     AssetManager& assetManager
 ) {
-    int width{ (int)(32 * renderScale) };
-    int height{ (int)(32 * renderScale) };
-
     drawAnimationFrameAt(
         m_animation,
         position.x,
@@ -42,14 +39,23 @@ void Enemy::draw(
         floorStartPosition,
         assetManager
     );
+
+    Rectangle hitbox{ getCollider() };
+    DrawRectangleLines(
+        hitbox.x * renderScale,
+        floorStartPosition - (32 * renderScale) + (hitbox.y * renderScale),
+        hitbox.width * renderScale,
+        hitbox.height * renderScale,
+        RED
+    );
 }
 
 
 Rectangle Enemy::getCollider() const {
     return {
-        position.x - 16.0f,
-        position.y -16.0f,
-        32.0f,
-        32.0f
+        position.x + 2.0f,
+        position.y + 14.0f,
+        28.0f,
+        18.0f
     };
 }

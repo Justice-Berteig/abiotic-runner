@@ -50,7 +50,7 @@ void drawAnimationFrameAt(
         frameRect,
         {
             x * renderScale,
-            (floorStartPosition - (y * renderScale)) - (32 * renderScale),
+            floorStartPosition - (32 * renderScale) + (y * renderScale),
             Assets::getDimensionsForTexture(anim.spriteSheet).x * renderScale,
             Assets::getDimensionsForTexture(anim.spriteSheet).y * renderScale
         },
