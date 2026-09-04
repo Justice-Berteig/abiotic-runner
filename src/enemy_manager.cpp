@@ -34,7 +34,10 @@ void EnemyManager::tick(
 
         // Remove enemy if off screen.
         if(m_enemies[i].position.x < -128.0f)
+        {
             m_enemies.erase(m_enemies.begin() + i);
+            --i;
+        }
     }
 }
 
