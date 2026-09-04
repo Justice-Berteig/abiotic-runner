@@ -15,7 +15,10 @@ namespace Assets {
         dirt,
         pest,
         pest_move,
-        player
+        player,
+        player_run,
+        player_jump,
+        player_fall
     };
 
 
@@ -31,6 +34,12 @@ namespace Assets {
                 return "../resources/pest_move.png";
             case Texture::player:
                 return "../resources/player.png";
+            case Texture::player_run:
+                return "../resources/player_run.png";
+            case Texture::player_jump:
+                return "../resources/player_jump.png";
+            case Texture::player_fall:
+                return "../resources/player_fall.png";
             default:
                 throw std::runtime_error(
                     "ERROR: Invalid cannot find path for given texture."
@@ -51,6 +60,12 @@ namespace Assets {
                 return {  32,  32 };
             case Texture::player:
                 return {  32,  32 };
+            case Texture::player_run:
+                return {  32,  32 };
+            case Texture::player_jump:
+                return {  32,  32 };
+            case Texture::player_fall:
+                return {  32,  32 };
             default:
                 throw std::runtime_error(
                     "ERROR: No dimensions set for given texture."
@@ -63,6 +78,12 @@ namespace Assets {
         switch(texture) {
             case Texture::pest_move:
                 return 10;
+            case Texture::player_run:
+                return 8;
+            case Texture::player_jump:
+                return 4;
+            case Texture::player_fall:
+                return 4;
             default:
                 return 1;
         }
