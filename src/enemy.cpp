@@ -53,9 +53,9 @@ void Enemy::draw(
 
 Rectangle Enemy::getCollider() const {
     return {
-        position.x + 2.0f,
-        position.y + 14.0f,
-        28.0f,
-        18.0f
+        position.x + 3.0f,
+        position.y + 16.0f,
+        26.0f,
+        16.0f
     };
 }

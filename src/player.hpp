@@ -4,6 +4,7 @@ Player class.
 
 #pragma once
 
+#include "animation.hpp"
 #include "asset_manager.hpp"
 #include "enemy.hpp"
 
@@ -35,8 +36,14 @@ class Player {
         static constexpr float   m_posX               { 32.0f };
         static constexpr uint8_t m_maxHealth          { 5 };
 
-        bool    m_onGround;
-        uint8_t m_health;
-        float   m_posY;
-        float   m_velY;
+        bool      m_onGround;
+        uint8_t   m_health;
+        float     m_posY;
+        float     m_velY;
+        Animation m_anim;
+
+        /*
+        Method to get the collision box for the player.
+        */
+        Rectangle getCollider() const;
 };

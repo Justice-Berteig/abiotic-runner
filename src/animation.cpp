@@ -9,10 +9,11 @@
 
 
 Animation::Animation(Assets::Texture spriteSheet)
-    : spriteSheet  (spriteSheet)
-    , currentFrame (0)
-    , totalFrames  (Assets::getFrameCountInTexture(spriteSheet))
-    , lastFrameTime(0.0f)
+    : spriteSheet      (spriteSheet)
+    , animationFinished(false)
+    , currentFrame     (0)
+    , totalFrames      (Assets::getFrameCountInTexture(spriteSheet))
+    , lastFrameTime    (0.0f)
 { }
 
 
@@ -71,6 +72,8 @@ void updateAnimationCurrentFrame(
         anim.lastFrameTime -= anim.s_timeBetweenFrames;
         anim.currentFrame += 1;
     }
+
+    if(anim.currentFrame >= anim.totalFrames) anim.animationFinished = true;
 
     // Ensure current frame doesn't exceed the total number of frames.
     anim.currentFrame %= anim.totalFrames;

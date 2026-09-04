@@ -12,6 +12,7 @@ struct Animation {
     Animation(Assets::Texture spriteSheet);
 
     Assets::Texture spriteSheet;
+    bool            animationFinished;
     int             currentFrame;
     int             totalFrames;
     float           lastFrameTime;
