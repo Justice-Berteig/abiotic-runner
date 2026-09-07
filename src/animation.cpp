@@ -28,21 +28,26 @@ void drawAnimationFrameAt(
     // Get spritesheet.
     Texture2D tex{ assetManager.requestTexture(anim.spriteSheet) };
 
+    // Get the dimensions for each frame of the spritesheet
+    Vector2 frameDimensions{
+        Assets::getDimensionsForTexture(anim.spriteSheet)
+    };
+
     // Get rect for current frame.
     // Determine how many rows/cols of frames the spritesheet has.
     int ssCols{
           tex.width
-        / static_cast<int>(Assets::getDimensionsForTexture(anim.spriteSheet).x)
+        / static_cast<int>(frameDimensions.x)
     };
     // Determine row/col of current frame.
     int currentFrameRow{ anim.currentFrame / ssCols };
     int currentFrameCol{ anim.currentFrame % ssCols };
     // Rect for current frame is row/col * width/height.
     Rectangle frameRect{
-        currentFrameCol * Assets::getDimensionsForTexture(anim.spriteSheet).x,
-        currentFrameRow * Assets::getDimensionsForTexture(anim.spriteSheet).y,
-        Assets::getDimensionsForTexture(anim.spriteSheet).x,
-        Assets::getDimensionsForTexture(anim.spriteSheet).y
+        currentFrameCol * frameDimensions.x,
+        currentFrameRow * frameDimensions.y,
+        frameDimensions.x,
+        frameDimensions.y
     };
 
     // Draw the frame.
@@ -51,9 +56,13 @@ void drawAnimationFrameAt(
         frameRect,
         {
             x * renderScale,
-            floorStartPosition - (32 * renderScale) + (y * renderScale),
-            Assets::getDimensionsForTexture(anim.spriteSheet).x * renderScale,
-            Assets::getDimensionsForTexture(anim.spriteSheet).y * renderScale
+            (
+                  floorStartPosition
+                - (frameDimensions.y * renderScale)
+                + (y * renderScale)
+            ),
+            frameDimensions.x * renderScale,
+            frameDimensions.y * renderScale
         },
         {0, 0},
         0.0f,

@@ -6,6 +6,7 @@ Player class.
 
 #include "animation.hpp"
 #include "asset_manager.hpp"
+#include "assets.hpp"
 #include "enemy.hpp"
 
 #include <cstdint>
@@ -35,6 +36,9 @@ class Player {
         static constexpr float   m_jumpVelocity       { 22.8f };
         static constexpr float   m_posX               { 32.0f };
         static constexpr uint8_t m_maxHealth          { 5 };
+        static constexpr Vector2 m_texDimensions      {
+            Assets::getDimensionsForTexture(Assets::Texture::player)
+        };
 
         bool      m_onGround;
         uint8_t   m_health;

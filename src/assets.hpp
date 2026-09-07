@@ -59,13 +59,13 @@ namespace Assets {
             case Texture::pest_move:
                 return {  32,  32 };
             case Texture::player:
-                return {  32,  32 };
+                return {  48,  48 };
             case Texture::player_run:
-                return {  32,  32 };
+                return {  48,  48 };
             case Texture::player_jump:
-                return {  32,  32 };
+                return {  48,  48 };
             case Texture::player_fall:
-                return {  32,  32 };
+                return {  48,  48 };
             default:
                 throw std::runtime_error(
                     "ERROR: No dimensions set for given texture."

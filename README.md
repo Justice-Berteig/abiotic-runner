@@ -1,5 +1,5 @@
 This is a very simple endless runner based on the sleeping minigame from Abiotic
-Factor. Made with C++ and Raylib.
+Factor. Made with C++ and raylib.
 
 # Controls
 Space to jump
@@ -23,7 +23,7 @@ Space to jump
 - UI to display lives
 
 # Building
-## For Linux:
+### For Linux:
 Requires CMake and GCC.
 1. Clone repository and `cd` into the folder
 2. Run `cmake -B build` to create a build directory
@@ -31,5 +31,5 @@ Requires CMake and GCC.
 4. Build the project with `cmake --build .`
 5. Run `abiotic_runner`
 
-## For Windows:
+### For Windows:
 TODO
