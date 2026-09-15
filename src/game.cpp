@@ -5,6 +5,9 @@
 #include "type_aliases.hpp"
 
 #include "raylib.h"
+#if defined(PLATFORM_WEB)
+    #include <emscripten/emscripten.h>
+#endif
 
 #include <chrono>
 #include <cstdlib>
@@ -29,9 +32,10 @@ Game::Game()
         "Abiotic Runner"
     );
 
+#if defined(PLATFORM_WEB)
+#else
     SetWindowState(FLAG_VSYNC_HINT);
     SetWindowState(FLAG_WINDOW_RESIZABLE);
-    SetWindowMinSize(Globals::minScreenWidth, Globals::minScreenHeight);
 
     // Determine inital window size and position based on the current monitor's
     // dimensions.
@@ -62,6 +66,9 @@ Game::Game()
         targetWindowPositionX,
         targetWindowPositionY
     );
+#endif
+
+    SetWindowMinSize(Globals::minScreenWidth, Globals::minScreenHeight);
 
     std::cout << "[Game]: created.\n";
 }
@@ -75,10 +82,19 @@ Game::~Game() {
 
 
 void Game::run() {
-    while (!WindowShouldClose()) {
-        m_tick();
-        m_draw();
+#if defined(PLATFORM_WEB)
+    emscripten_set_main_loop(m_updateDrawFrame, 0, 1);
+#else
+    while(!WindowShouldClose()) {
+        m_updateDrawFrame();
     }
+#endif
+}
+
+
+void Game::m_updateDrawFrame() {
+    m_tick();
+    m_draw();
 }
 
 

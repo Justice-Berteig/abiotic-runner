@@ -25,21 +25,21 @@ namespace Assets {
     static constexpr const char* getPathForTexture(Texture texture) {
         switch(texture) {
             case Texture::cloud:
-                return "../resources/cloud.png";
+                return "resources/cloud.png";
             case Texture::dirt:
-                return "../resources/dirt.png";
+                return "resources/dirt.png";
             case Texture::pest:
-                return "../resources/pest.png";
+                return "resources/pest.png";
             case Texture::pest_move:
-                return "../resources/pest_move.png";
+                return "resources/pest_move.png";
             case Texture::player:
-                return "../resources/player.png";
+                return "resources/player.png";
             case Texture::player_run:
-                return "../resources/player_run.png";
+                return "resources/player_run.png";
             case Texture::player_jump:
-                return "../resources/player_jump.png";
+                return "resources/player_jump.png";
             case Texture::player_fall:
-                return "../resources/player_fall.png";
+                return "resources/player_fall.png";
             default:
                 throw std::runtime_error(
                     "ERROR: Invalid cannot find path for given texture."

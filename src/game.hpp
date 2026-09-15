@@ -34,6 +34,12 @@ class Game {
         Player       m_player;
 
         /*
+        Function calls m_tick() and m_draw().
+        Needed for use in web build.
+        */
+        void m_updateDrawFrame();
+
+        /*
         Tick function for processing every game tick.
         */
         void m_tick();
