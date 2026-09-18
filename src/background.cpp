@@ -6,7 +6,6 @@ Definitions for Background class functions.
 
 #include "assets.hpp"
 #include "cloud.hpp"
-#include "globals.hpp"
 #include "tree.hpp"
 
 #include "raylib.h"
@@ -94,9 +93,9 @@ void Background::draw(
         0,
         renderWidth,
         renderHeight,
-        Globals::skyStartColour,
-        Globals::skyEndColour
-        );
+        s_skyStartColour,
+        s_skyEndColour
+    );
 
     // Draw clouds.
     Texture2D cloudTexture{

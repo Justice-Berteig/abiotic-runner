@@ -5,8 +5,6 @@
 
 #pragma once
 
-#include "raylib.h"
-
 #include <random>
 
 namespace Globals {
@@ -16,11 +14,11 @@ namespace Globals {
     inline constexpr int minScreenWidth { tileSize * minTileColumns };
     inline constexpr int minScreenHeight{ tileSize * minTileRows };
 
+    // Determine what percentage of the screen the sky should take up.
     inline constexpr float skyScreenPercentage{ 0.7 };
 
-    inline constexpr Color skyStartColour { 100, 100, 255, 255 };
-    inline constexpr Color skyEndColour   { 100, 100, 120, 255 };
-
-    static std::random_device rd;
-    static std::mt19937       gen(rd());
+    // Random number generator used to randomize spawning of decorations and
+    // enemies.
+    inline static std::random_device rd;
+    inline static std::mt19937       gen(rd());
 }
