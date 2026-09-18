@@ -82,16 +82,16 @@ void Player::draw(
         assetManager
     );
 
-    Rectangle hitbox{ getCollider() };
+    // Draw player collider.
+    Rectangle collider{ getCollider() };
     DrawRectangleLines(
-        hitbox.x * renderScale,
+        collider.x * renderScale,
         (
               floorStartPosition
-            - (m_texDimensions.y * renderScale)
-            + (hitbox.y * renderScale)
+            - ((collider.height - m_posY) * renderScale)
         ),
-        hitbox.width * renderScale,
-        hitbox.height * renderScale,
+        collider.width * renderScale,
+        collider.height * renderScale,
         RED
     );
 }

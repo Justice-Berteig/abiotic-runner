@@ -41,22 +41,16 @@ void Enemy::draw(
         assetManager
     );
 
-    // Get dimensions of the enemy's texture to draw its hitbox correctly at
-    // ground level.
-    Vector2 textureDimensions{
-        Assets::getDimensionsForTexture(Assets::Texture::pest)
-    };
-
-    Rectangle hitbox{ getCollider() };
+    // Draw enemy collider.
+    Rectangle collider{ getCollider() };
     DrawRectangleLines(
-        hitbox.x * renderScale,
+        collider.x * renderScale,
         (
               floorStartPosition
-            - (textureDimensions.y * renderScale)
-            + (hitbox.y * renderScale)
+            - ((collider.height - position.y) * renderScale)
         ),
-        hitbox.width * renderScale,
-        hitbox.height * renderScale,
+        collider.width * renderScale,
+        collider.height * renderScale,
         RED
     );
 }

@@ -45,7 +45,7 @@ target_include_directories(
     PRIVATE
         "${RAYLIB_PATH}/build/raylib/include/"
 )
-# Include built version of raylib for web.
+# Handle extra stuff for web build.
 if(EMSCRIPTEN)
     # Link executable with libraylib.a for web build.
     target_link_directories(
