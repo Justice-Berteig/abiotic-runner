@@ -4,21 +4,29 @@ Definitions for Background class functions.
 
 #include "background.hpp"
 
+#include "assets.hpp"
+#include "cloud.hpp"
 #include "globals.hpp"
+#include "tree.hpp"
 
 #include "raylib.h"
 
 #include <cmath>
-#include <cstdlib>
 
 
 Background::Background()
     : m_clouds()
     , m_groundOffset(0.0f)
-    , m_secondsToCloudSpawn(s_getSecondsToCloudSpawn())
+    , m_secondsToCloudSpawn(Cloud::s_getSecondsToSpawn())
+    , m_secondsToTreeSpawn(Tree::s_getSecondsToSpawn())
+    , m_trees()
 {
+    // Spawn some initial clouds.
     m_clouds.emplace_back(100.0f, 124.0f);
     m_clouds.emplace_back(380.0f, 180.0f);
+
+    // Spawn some initaial trees.
+    m_trees.emplace_back(100.0f, 128.0f);
 }
 
 
@@ -26,25 +34,48 @@ Background::~Background() {}
 
 
 void Background::tick(float deltaTime) {
-    // Handle cloud spawning.
-    if(m_secondsToCloudSpawn > 0.0f) m_secondsToCloudSpawn -= deltaTime;
-    else {
-        float overflow{ m_secondsToCloudSpawn };
-        m_secondsToCloudSpawn = s_getSecondsToCloudSpawn() + overflow;
-        m_clouds.emplace_back(s_cloudSpawnX, s_getRandomCloudSpawnPosition());
-    }
- 
     // Update ground offset.
     m_groundOffset += s_groundMoveSpeed * deltaTime;
     while(m_groundOffset > 32.0f) m_groundOffset -= 32.0f;
 
+    // Handle cloud spawning.
+    if(m_secondsToCloudSpawn > 0.0f) m_secondsToCloudSpawn -= deltaTime;
+    else {
+        float overflow{ m_secondsToCloudSpawn };
+        m_secondsToCloudSpawn = Cloud::s_getSecondsToSpawn() + overflow;
+        m_clouds.emplace_back(Cloud::s_getSpawnPosition());
+    }
+
+    // Handle tree spawning.
+    if(m_secondsToTreeSpawn > 0.0f) m_secondsToTreeSpawn -= deltaTime;
+    else {
+        float overflow{ m_secondsToTreeSpawn };
+        m_secondsToTreeSpawn = Tree::s_getSecondsToSpawn() + overflow;
+        m_trees.emplace_back(Tree::s_spawnPosition);
+    }
+ 
     // Update cloud positions.
     for(int i{ 0 }; i < m_clouds.size(); i++) {
-        m_clouds[i].position.x -= s_cloudMoveSpeed * deltaTime;
+        m_clouds[i].x -= Cloud::s_moveSpeed * deltaTime;
 
         // Remove cloud if off screen.
-        if(m_clouds[i].position.x < -256.0f)
+        if(m_clouds[i].x < -256.0f)
+        {
             m_clouds.erase(m_clouds.begin() + i);
+            --i;
+        }
+    }
+
+    // Update tree positions.
+    for(int i{ 0 }; i < m_trees.size(); i++) {
+        m_trees[i].x -= Tree::s_moveSpeed * deltaTime;
+
+        // Remove cloud if off screen.
+        if(m_trees[i].x < -256.0f)
+        {
+            m_trees.erase(m_trees.begin() + i);
+            --i;
+        }
     }
 }
 
@@ -69,15 +100,33 @@ void Background::draw(
 
     // Draw clouds.
     Texture2D cloudTexture{
-        assetManager.requestTexture(Cloud::texture)
+        assetManager.requestTexture(Cloud::s_texture)
     };
 
-    for(const Cloud& cloud : m_clouds) {
+    for(const Vector2& cloud : m_clouds) {
         DrawTextureEx(
             cloudTexture,
             {
-                cloud.position.x * renderScale,
-                floorStartPosition - (cloud.position.y * renderScale),
+                cloud.x * renderScale,
+                floorStartPosition - (cloud.y * renderScale),
+            },
+            0,
+            renderScale,
+            WHITE
+        );
+    }
+
+    // Draw trees.
+    Texture2D treeTexture{
+        assetManager.requestTexture(Tree::s_texture)
+    };
+
+    for(const Vector2& tree : m_trees) {
+        DrawTextureEx(
+            treeTexture,
+            {
+                tree.x * renderScale,
+                floorStartPosition - (tree.y * renderScale),
             },
             0,
             renderScale,
@@ -94,14 +143,18 @@ void Background::draw(
 
     int tileColumnCount{
         (
-              (renderWidth + (int)std::ceil(m_groundOffset * renderScale))
-            / scaledTileSize
+            (
+                  renderWidth
+                + static_cast<int>(std::ceil(m_groundOffset * renderScale))
+            ) / scaledTileSize
         ) + 1
     };
     int tileRowCount{
         (
-              (renderHeight - floorStartPosition)
-            / scaledTileSize
+            (
+                  renderHeight
+                - floorStartPosition
+            ) / scaledTileSize
         ) + 1
     };
 
@@ -123,16 +176,4 @@ void Background::draw(
             );
         }
     }
-}
-
-
-float Background::s_getSecondsToCloudSpawn() {
-    return (((float)rand() / RAND_MAX) * s_rangeSecondsBetweenClouds)
-        + s_minSecondsBetweenClouds;
-}
-
-
-float Background::s_getRandomCloudSpawnPosition() {
-    return (((float)rand() / RAND_MAX) * s_rangeCloudSpawnY)
-            + s_minCloudSpawnY;
 }

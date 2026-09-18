@@ -70,9 +70,9 @@ Rectangle Enemy::getCollider() const {
     };
 
     return {
-        position.x + 3.0f,
-        position.y + 16.0f,
-        textureDimensions.x - 6,
-        textureDimensions.y - 16
+        position.x + 6.0f,
+        position.y + 18.0f,
+        textureDimensions.x - 10,
+        textureDimensions.y - 18
     };
 }

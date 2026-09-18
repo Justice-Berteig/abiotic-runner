@@ -18,7 +18,8 @@ namespace Assets {
         player,
         player_run,
         player_jump,
-        player_fall
+        player_fall,
+        tree
     };
 
 
@@ -40,6 +41,8 @@ namespace Assets {
                 return "resources/player_jump.png";
             case Texture::player_fall:
                 return "resources/player_fall.png";
+            case Texture::tree:
+                return "resources/tree.png";
             default:
                 throw std::runtime_error(
                     "ERROR: Invalid cannot find path for given texture."
@@ -66,6 +69,8 @@ namespace Assets {
                 return {  48,  48 };
             case Texture::player_fall:
                 return {  48,  48 };
+            case Texture::tree:
+                return { 128, 128 };
             default:
                 throw std::runtime_error(
                     "ERROR: No dimensions set for given texture."

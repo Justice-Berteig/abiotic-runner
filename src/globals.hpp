@@ -7,6 +7,8 @@
 
 #include "raylib.h"
 
+#include <random>
+
 namespace Globals {
     inline constexpr int tileSize       { 32 };
     inline constexpr int minTileColumns { 12 };
@@ -18,4 +20,7 @@ namespace Globals {
 
     inline constexpr Color skyStartColour { 100, 100, 255, 255 };
     inline constexpr Color skyEndColour   { 100, 100, 120, 255 };
+
+    static std::random_device rd;
+    static std::mt19937       gen(rd());
 }

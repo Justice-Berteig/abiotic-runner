@@ -113,9 +113,9 @@ void Player::checkCollisionWith(const Enemy& enemy) {
 
 Rectangle Player::getCollider() const {
     return {
-        m_posX + 16.0f,
+        m_posX + 17.0f,
         m_posY + 6.0f,
-        m_texDimensions.x - 32,
+        m_texDimensions.x - 34,
         m_texDimensions.y - 6
     };
 }

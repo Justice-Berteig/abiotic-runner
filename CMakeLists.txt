@@ -39,19 +39,20 @@ add_executable(${PROJECT_NAME})
 target_sources(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCES})
 # Include the source directory.
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_INCLUDE})
-# Include and link the raylib directory.
+# Add raylib includes to the executable.
 target_include_directories(
     ${PROJECT_NAME}
     PRIVATE
         "${RAYLIB_PATH}/build/raylib/include/"
 )
-target_link_directories(
-    ${PROJECT_NAME}
-    PRIVATE
-        "${RAYLIB_PATH}/build/raylib/"
-)
 # Include built version of raylib for web.
 if(EMSCRIPTEN)
+    # Link executable with libraylib.a for web build.
+    target_link_directories(
+        ${PROJECT_NAME}
+        PRIVATE
+            "${RAYLIB_PATH}/build/raylib/"
+    )
     # Add link option to embed resource files in file.js so they can be loaded
     # in the web build.
     # Path is relative to build directory making it `../resources`.
