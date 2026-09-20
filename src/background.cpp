@@ -20,12 +20,23 @@ Background::Background()
     , m_secondsToTreeSpawn(Tree::s_getSecondsToSpawn())
     , m_trees()
 {
-    // Spawn some initial clouds.
-    m_clouds.emplace_back(100.0f, 124.0f);
-    m_clouds.emplace_back(380.0f, 180.0f);
+    // Simulate 150 seconds of cloud spawning/moving to create some random
+    // initial clouds.
+    float remainingSeconds{ 150.0f };
+    while(remainingSeconds > 0.0f) {
+        remainingSeconds -= Cloud::s_getSecondsToSpawn();
+        m_clouds.emplace_back(Cloud::s_getSpawnPosition());
+        m_clouds.back().x -= remainingSeconds * Cloud::s_moveSpeed;
+    }
 
-    // Spawn some initaial trees.
-    m_trees.emplace_back(100.0f, 128.0f);
+    // Simulate 15 seconds of tree spawning/moving to create some random initial
+    // trees.
+    remainingSeconds = 15.0f;
+    while(remainingSeconds > 0.0f) {
+        remainingSeconds -= Tree::s_getSecondsToSpawn();
+        m_trees.emplace_back(Tree::s_spawnPosition);
+        m_trees.back().x -= remainingSeconds * Tree::s_moveSpeed;
+    }
 }
 
 

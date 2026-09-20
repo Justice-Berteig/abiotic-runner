@@ -17,8 +17,8 @@ namespace Cloud {
     static constexpr Assets::Texture s_texture{ Assets::Texture::cloud };
 
     // Create function to get random number of seconds between cloud spawns.
-    static constexpr float s_minSecondsBetween { 40.0f };
-    static constexpr float s_maxSecondsBetween { 85.0f };
+    static constexpr float s_minSecondsBetween { 32.0f };
+    static constexpr float s_maxSecondsBetween { 76.0f };
     static std::uniform_real_distribution<float> distSecondsBetween(
         s_minSecondsBetween,
         s_maxSecondsBetween
