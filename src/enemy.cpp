@@ -60,7 +60,7 @@ Rectangle Enemy::getCollider() const {
     // Get dimensions for this enemy's texture to build the collider relative to
     // that.
     Vector2 textureDimensions{
-        Assets::getDimensionsForTexture(Assets::Texture::pest)
+        Assets::getDimensionsForTexture(Assets::Texture::pest_move)
     };
 
     return {

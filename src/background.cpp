@@ -134,8 +134,11 @@ void Background::draw(
     }
 
     // Draw dirt floor.
-    Texture2D& dirtTexture{
+    const Texture2D& dirtTexture{
         assetManager.requestTexture(Assets::Texture::dirt)
+    };
+    const Texture2D& grassyDirtTexture{
+        assetManager.requestTexture(Assets::Texture::dirt_grassy)
     };
 
     int scaledTileSize{ static_cast<int>(dirtTexture.width * renderScale) };
@@ -160,7 +163,7 @@ void Background::draw(
     for(int y{ 0 }; y < tileRowCount; ++y) {
         for(int x{ 0 }; x < tileColumnCount; ++x) {
             DrawTextureEx(
-                dirtTexture,
+                y == 0 ? grassyDirtTexture: dirtTexture,
                 {
                     static_cast<float>(
                         (x * scaledTileSize) - (m_groundOffset * renderScale)

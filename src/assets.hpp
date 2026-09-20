@@ -13,9 +13,8 @@ namespace Assets {
     enum class Texture {
         cloud,
         dirt,
-        pest,
+        dirt_grassy,
         pest_move,
-        player,
         player_run,
         player_jump,
         player_fall,
@@ -29,12 +28,10 @@ namespace Assets {
                 return "resources/cloud.png";
             case Texture::dirt:
                 return "resources/dirt.png";
-            case Texture::pest:
-                return "resources/pest.png";
+            case Texture::dirt_grassy:
+                return "resources/dirt_grassy.png";
             case Texture::pest_move:
                 return "resources/pest_move.png";
-            case Texture::player:
-                return "resources/player.png";
             case Texture::player_run:
                 return "resources/player_run.png";
             case Texture::player_jump:
@@ -57,12 +54,10 @@ namespace Assets {
                 return { 128,  64 };
             case Texture::dirt:
                 return {  32,  32 };
-            case Texture::pest:
+            case Texture::dirt_grassy:
                 return {  32,  32 };
             case Texture::pest_move:
                 return {  32,  32 };
-            case Texture::player:
-                return {  48,  48 };
             case Texture::player_run:
                 return {  48,  48 };
             case Texture::player_jump:

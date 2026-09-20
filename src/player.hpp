@@ -37,7 +37,7 @@ class Player {
         static constexpr float   m_posX               { 32.0f };
         static constexpr uint8_t m_maxHealth          { 5 };
         static constexpr Vector2 m_texDimensions      {
-            Assets::getDimensionsForTexture(Assets::Texture::player)
+            Assets::getDimensionsForTexture(Assets::Texture::player_run)
         };
 
         bool      m_onGround;

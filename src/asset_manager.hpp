@@ -23,7 +23,7 @@ class AssetManager {
         texture. If the texture is not already loaded, it is loaded, and a
         reference to the requested texture is returned.
         */
-        Texture2D& requestTexture(Assets::Texture requestedTexture);
+        const Texture2D& requestTexture(Assets::Texture requestedTexture);
 
     private:
         /*

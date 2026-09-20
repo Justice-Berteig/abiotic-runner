@@ -18,7 +18,7 @@ AssetManager::~AssetManager() {
 }
 
 
-Texture2D& AssetManager::requestTexture(Assets::Texture requestedTexture) {
+const Texture2D& AssetManager::requestTexture(Assets::Texture requestedTexture) {
     // Load the requested texture if it has not yet been loaded.
     if(!m_loadedTextures.count(requestedTexture))
         m_loadTexture(requestedTexture);
