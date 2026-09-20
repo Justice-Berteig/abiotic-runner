@@ -14,6 +14,11 @@ namespace Globals {
     inline constexpr int minScreenWidth { tileSize * minTileColumns };
     inline constexpr int minScreenHeight{ tileSize * minTileRows };
 
+    // Set player's move speed.
+    // This ends up being used to move the ground instead since the player stays
+    // fixed on the screen.
+    inline constexpr float playerMoveSpeed{ 100.0f };
+
     // Determine what percentage of the screen the sky should take up.
     inline constexpr float skyScreenPercentage{ 0.7 };
 

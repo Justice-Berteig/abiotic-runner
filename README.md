@@ -10,17 +10,7 @@ Space to jump
 - Pest enemies that can collide with the player
 - Game restarts on death
 - Randomly spawning decorative clouds
-
-# Planned Features
-- Tree decorations
-- Mountain decorations
-- Rock decorations
-- Grass decoration
-- Better looking sky
-- Sun
-- Other enemies
-- Lives
-- UI to display lives
+- Randomly spawning decorative trees
 
 # Requirements for Building:
 - CMake

@@ -13,8 +13,12 @@ Some constants for cloud decorations.
 
 
 namespace Cloud {
-    static constexpr float s_moveSpeed        { 4.0f };
     static constexpr Assets::Texture s_texture{ Assets::Texture::cloud };
+
+    // Determines how much of the foreground's move speed clouds should have.
+    // By reducing the speed that clouds move compared to the foreground it
+    // creates a parallax effect.
+    static constexpr float s_parallaxMultiplier { 0.04f };
 
     // Create function to get random number of seconds between cloud spawns.
     static constexpr float s_minSecondsBetween { 32.0f };

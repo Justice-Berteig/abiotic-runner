@@ -13,11 +13,15 @@ Some contants for tree decorations.
 
 
 namespace Tree {
-    static constexpr float s_moveSpeed        { 68.0f };
-    static constexpr Assets::Texture s_texture{ Assets::Texture::tree };
+    static constexpr Assets::Texture s_texture { Assets::Texture::tree };
+
+    // Determines how much of the foreground's move speed trees should have.
+    // By reducing the speed that trees move compared to the foreground it
+    // creates a parallax effect.
+    static constexpr float s_parallaxMultiplier { 0.68f };
 
     // Create function to get random number of seconds between tree spawns.
-    static constexpr float s_minSecondsBetween { 2.4f };
+    static constexpr float s_minSecondsBetween { 4.4f };
     static constexpr float s_maxSecondsBetween { 12.2f };
     static std::uniform_real_distribution<float> distSecondsBetween(
         s_minSecondsBetween,

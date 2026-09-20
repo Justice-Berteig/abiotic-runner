@@ -6,6 +6,7 @@ Definitions for Background class functions.
 
 #include "assets.hpp"
 #include "cloud.hpp"
+#include "globals.hpp"
 #include "tree.hpp"
 
 #include "raylib.h"
@@ -26,7 +27,11 @@ Background::Background()
     while(remainingSeconds > 0.0f) {
         remainingSeconds -= Cloud::s_getSecondsToSpawn();
         m_clouds.emplace_back(Cloud::s_getSpawnPosition());
-        m_clouds.back().x -= remainingSeconds * Cloud::s_moveSpeed;
+        m_clouds.back().x -= (
+              remainingSeconds
+            * Globals::playerMoveSpeed
+            * Cloud::s_parallaxMultiplier
+        );
     }
 
     // Simulate 15 seconds of tree spawning/moving to create some random initial
@@ -35,7 +40,11 @@ Background::Background()
     while(remainingSeconds > 0.0f) {
         remainingSeconds -= Tree::s_getSecondsToSpawn();
         m_trees.emplace_back(Tree::s_spawnPosition);
-        m_trees.back().x -= remainingSeconds * Tree::s_moveSpeed;
+        m_trees.back().x -= (
+              remainingSeconds
+            * Globals::playerMoveSpeed
+            * Tree::s_parallaxMultiplier
+        );
     }
 }
 
@@ -45,7 +54,7 @@ Background::~Background() {}
 
 void Background::tick(float deltaTime) {
     // Update ground offset.
-    m_groundOffset += s_groundMoveSpeed * deltaTime;
+    m_groundOffset += Globals::playerMoveSpeed * deltaTime;
     while(m_groundOffset > 32.0f) m_groundOffset -= 32.0f;
 
     // Handle cloud spawning.
@@ -66,7 +75,11 @@ void Background::tick(float deltaTime) {
  
     // Update cloud positions.
     for(int i{ 0 }; i < m_clouds.size(); i++) {
-        m_clouds[i].x -= Cloud::s_moveSpeed * deltaTime;
+        m_clouds[i].x -= (
+              Globals::playerMoveSpeed
+            * Cloud::s_parallaxMultiplier
+            * deltaTime
+        );
 
         // Remove cloud if off screen.
         if(m_clouds[i].x < -256.0f)
@@ -78,7 +91,11 @@ void Background::tick(float deltaTime) {
 
     // Update tree positions.
     for(int i{ 0 }; i < m_trees.size(); i++) {
-        m_trees[i].x -= Tree::s_moveSpeed * deltaTime;
+        m_trees[i].x -= (
+              Globals::playerMoveSpeed
+            * Tree::s_parallaxMultiplier
+            * deltaTime
+        );
 
         // Remove cloud if off screen.
         if(m_trees[i].x < -256.0f)

@@ -5,12 +5,13 @@ Implementation of Enemy class members.
 #include "enemy.hpp"
 #include "animation.hpp"
 #include "assets.hpp"
+#include "globals.hpp"
 
 
 Enemy::Enemy()
     : position(500.0f, 0.0f)
     , m_animation(Assets::Texture::pest_move)
-    , m_moveSpeed(100.0f)
+    , m_moveSpeed(4.0f)
 {}
 
 
@@ -20,7 +21,10 @@ Enemy::~Enemy() {
 
 void Enemy::tick(float deltaTime) {
     // Move the enemy forwards.
-    position.x -= m_moveSpeed * deltaTime;
+    // Move speed is combined with player move speed to give impression of
+    // moving relative to the player since the player doesn't move relative to
+    // the viewport.
+    position.x -= (m_moveSpeed + Globals::playerMoveSpeed) * deltaTime;
 
     // Update the animation's current frame.
     updateAnimationCurrentFrame(m_animation, deltaTime);

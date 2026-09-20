@@ -25,11 +25,9 @@ class Background {
         );
 
     private:
-        static constexpr float s_groundMoveSpeed{ 100.0f };
-
         // Set colours for the sky gradient.
         static constexpr Color s_skyStartColour { 140, 170, 240, 255 };
-        static constexpr Color s_skyEndColour   { 76, 94, 232, 255 };
+        static constexpr Color s_skyEndColour   {  76,  94, 232, 255 };
 
         std::vector<Vector2> m_clouds;
         float                m_groundOffset;
