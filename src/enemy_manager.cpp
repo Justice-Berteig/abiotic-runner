@@ -18,8 +18,9 @@ EnemyManager::~EnemyManager() {}
 
 
 void EnemyManager::tick(
-    float   deltaTime,
-    Player& player
+    float         deltaTime,
+    Player&       player,
+    AssetManager& assetManager
 ) {
     // Handle enemy spawning.
     if(m_secondsToEnemySpawn > 0.0f) m_secondsToEnemySpawn -= deltaTime;
@@ -40,7 +41,11 @@ void EnemyManager::tick(
     for(int i{ 0 }; i < m_enemies.size(); i++) {
         float oldPos{ m_enemies[i].position.x };
         m_enemies[i].tick(deltaTime);
-        if(oldPos > 0 && m_enemies[i].position.x <=0) player.incrementScore();
+
+        if(oldPos > 0 && m_enemies[i].position.x <= 0) {
+            assetManager.playSound(Assets::Sound::score_increase);
+            player.incrementScore();
+        }
 
         if(!player.isDead) player.checkCollisionWith(m_enemies[i]);
 

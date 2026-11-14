@@ -1,0 +1,8 @@
+Player Hurt Sound:
+MC Hurt 1 by K27K_Mike -- https://freesound.org/s/853660/ -- License: Creative Commons 0
+
+Score Increase Sound:
+8-Bit Coin Pickup by Qvantor -- https://freesound.org/s/878307/ -- License: Creative Commons 0
+
+Jump Sound:
+Basic Retro Jump by CJspellsfish -- https://freesound.org/s/727650/ -- License: Creative Commons 0

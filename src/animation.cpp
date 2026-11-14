@@ -7,8 +7,6 @@
 
 #include "raylib.h"
 
-#include <cmath>
-
 
 Animation::Animation()
     : spriteSheet      (Assets::Texture::missing_texture)

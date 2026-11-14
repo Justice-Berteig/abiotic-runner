@@ -22,12 +22,15 @@ class Game {
         void run();
 
     private:
+        static constexpr float s_timeFromDeathToRestart{ 1.5f };
+
         /*
         Store the last frame time so that the time between frames can be
         calculated.
         */
         TimePoint m_lastFrameTime;
 
+        float        m_restartTimer;
         AssetManager m_assetManager;
         Background   m_background;
         EnemyManager m_enemyManager;

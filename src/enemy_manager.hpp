@@ -4,10 +4,10 @@ Used to spawn and keep track of all enemies.
 
 #pragma once
 
+#include "asset_manager.hpp"
 #include "enemy.hpp"
 #include "player.hpp"
 
-#include <random>
 #include <vector>
 
 
@@ -17,8 +17,9 @@ class EnemyManager {
         ~EnemyManager();
 
         void tick(
-            float   deltaTime,
-            Player& player
+            float         deltaTime,
+            Player&       player,
+            AssetManager& assetManager
         );
         void draw(
             float         renderScale,

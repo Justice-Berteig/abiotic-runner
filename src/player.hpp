@@ -14,7 +14,10 @@ class Player {
     public:
         Player();
 
-        void tick(float deltaTime);
+        void tick(
+            float         deltaTime,
+            AssetManager& assetManager
+        );
         void draw(
             float         renderScale,
             int           floorStartPosition,
@@ -40,8 +43,8 @@ class Player {
         void incrementScore();
 
     private:
-        static constexpr float   m_gravityAcceleration{ 34.6f };
-        static constexpr float   m_jumpVelocity       { 22.8f };
+        static constexpr float   m_gravityAcceleration{ 74.6f };
+        static constexpr float   m_jumpVelocity       { 34.8f };
         static constexpr float   m_posX               { 32.0f };
         static constexpr Vector2 m_texDimensions      {
             Assets::getDimensionsForTexture(Assets::Texture::player_run)

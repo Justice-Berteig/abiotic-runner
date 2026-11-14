@@ -10,6 +10,29 @@ Define enums to describe all assets.
 
 
 namespace Assets {
+    enum class Sound {
+        player_hurt,
+        player_jump,
+        score_increase
+    };
+
+
+    static constexpr const char* getPathForSound(Sound audio) {
+        switch(audio) {
+            case Sound::player_hurt:
+                return "resources/player_hurt.wav";
+            case Sound::player_jump:
+                return "resources/player_jump.wav";
+            case Sound::score_increase:
+                return "resources/score_increase.wav";
+            default:
+                throw std::runtime_error(
+                    "ERROR: Invalid cannot find path for given audio."
+                );
+        }
+    }
+
+
     enum class Texture {
         cloud,
         dirt,

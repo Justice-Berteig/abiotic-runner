@@ -21,6 +21,7 @@ Game::Game()
     , m_enemyManager ()
     , m_lastFrameTime(std::chrono::steady_clock::now())
     , m_player       ()
+    , m_restartTimer (s_timeFromDeathToRestart)
 {
     // Set seed for random number generator
     std::srand(std::time({}));
@@ -114,20 +115,31 @@ void Game::m_tick() {
     // Toggle hitboxes if 'H' is pressed.
     if(IsKeyPressed(KEY_H)) Globals::showHitboxes = !Globals::showHitboxes;
 
+    // Toggle mute if 'M' is pressed.
+    if(IsKeyPressed(KEY_M)) m_assetManager.toggleMute();
+
     // Process background tick.
     m_background.tick(deltaTime);
 
     // Process player tick.
-    m_player.tick(deltaTime);
+    m_player.tick(deltaTime, m_assetManager);
 
     // Process enemy ticks
     m_enemyManager.tick(
         deltaTime,
-        m_player
+        m_player,
+        m_assetManager
     );
 
-    // Restart if player died.
-    if(m_player.isDead) m_restart();
+    // Play sound if player just died.
+    if(m_player.isDead && m_restartTimer == s_timeFromDeathToRestart)
+        m_assetManager.playSound(Assets::Sound::player_hurt);
+
+    // Count down restart timer if player is dead.
+    if(m_player.isDead) m_restartTimer -= deltaTime;
+
+    // Restart if restart timer has reached 0.
+    if(m_restartTimer <= 0.0f) m_restart();
 }
 
 
@@ -136,7 +148,7 @@ void Game::m_draw() {
 
     // Get the dimensions of the window at the beginning of each draw so it
     // updates when the window is resized.
-    int renderWidth  { GetRenderWidth() };
+    int renderWidth  { GetRenderWidth()  };
     int renderHeight { GetRenderHeight() };
 
     // Force resize window if too small.
@@ -144,7 +156,7 @@ void Game::m_draw() {
            renderWidth  < Globals::minScreenWidth
         || renderHeight < Globals::minScreenHeight
     ) {
-        int newScreenWidth { renderWidth };
+        int newScreenWidth { renderWidth  };
         int newScreenHeight{ renderHeight };
 
         if(renderWidth < Globals::minScreenWidth) {
@@ -176,11 +188,13 @@ void Game::m_draw() {
     );
 
     // Draw player.
-    m_player.draw(
-        renderScale,
-        floorStartPosition,
-        m_assetManager
-    );
+    if(!m_player.isDead) {
+        m_player.draw(
+            renderScale,
+            floorStartPosition,
+            m_assetManager
+        );
+    }
 
     // Draw enemies.
     m_enemyManager.draw(
@@ -214,6 +228,7 @@ void Game::m_restart() {
     m_enemyManager  = EnemyManager();
     m_lastFrameTime = std::chrono::steady_clock::now();
     m_player        = Player();
+    m_restartTimer  = s_timeFromDeathToRestart;
 
     std::cout << "[Game]: restarted.\n";
 }

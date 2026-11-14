@@ -20,11 +20,16 @@ Player::Player()
 {}
 
 
-void Player::tick(float deltaTime) {
+void Player::tick(
+    float         deltaTime,
+    AssetManager& assetManager
+) {
     if(m_onGround && (IsKeyPressed(KEY_SPACE) || IsKeyPressed(KEY_W))) {
         // If on ground and spacebar/W pressed, apply jump.
         m_onGround = false;
         m_velY     = -m_jumpVelocity;
+
+        assetManager.playSound(Assets::Sound::player_jump);
     }else if(!m_onGround) {
         // Apply gravity if not on ground.
         m_velY += m_gravityAcceleration * deltaTime;
