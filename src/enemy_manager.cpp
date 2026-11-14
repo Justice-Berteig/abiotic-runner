@@ -5,6 +5,8 @@ Implementation for EnemyManager class members.
 #include "enemy_manager.hpp"
 #include "globals.hpp"
 
+#include <cstdlib>
+
 
 EnemyManager::EnemyManager()
     : m_enemies            ({})
