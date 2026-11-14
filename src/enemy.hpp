@@ -11,6 +11,7 @@ Class for enemies.
 
 
 enum class EnemyType {
+    instructions,
     peccary,
     pest
 };

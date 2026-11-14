@@ -7,12 +7,18 @@ Implementation of Enemy class members.
 #include "assets.hpp"
 #include "globals.hpp"
 
+#include <algorithm>
+
 
 Enemy::Enemy(EnemyType type)
     : position(500.0f, 0.0f)
     , m_type  (type)
 {
     switch(m_type) {
+        case EnemyType::instructions:
+            m_animation = Animation(Assets::Texture::missing_texture);
+            m_moveSpeed = 2.0f;
+            break;
         case EnemyType::peccary:
             m_animation = Animation(Assets::Texture::peccary_walk);
             m_moveSpeed = 24.0f;
@@ -42,6 +48,24 @@ void Enemy::draw(
     int           floorStartPosition,
     AssetManager& assetManager
 ) {
+    // Handle drawing the instructions.
+    if(m_type == EnemyType::instructions) {
+        DrawText(
+            "Press Spacebar or W to jump.\nPress M to toggle mute",
+            100 * renderScale,
+            200 * renderScale,
+            12 * renderScale,
+            Color(
+                255,
+                255,
+                255, 
+                std::min(255, std::max(0, static_cast<int>(position.x)))
+            )
+        );
+        return;
+    }
+
+    // Handle drawing normal enemies.
     drawAnimationFrameAt(
         m_animation,
         position.x,
@@ -76,6 +100,13 @@ Rectangle Enemy::getCollider() const {
     };
 
     switch(m_type) {
+        case EnemyType::instructions:
+            return {
+                0.0f,
+                0.0f,
+                0.0f,
+                0.0f
+            };
         case EnemyType::peccary:
             return {
                 position.x + 8.0f,

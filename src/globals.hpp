@@ -30,6 +30,9 @@ namespace Globals {
     // Random distribution from 0 to 1.
     inline static std::uniform_real_distribution<double> zeroToOne(0.0, 1.0);
 
+    // Toggle for muting the game.
+    extern bool isMuted;
+
     // Toggle for showing entity hitboxes.
     extern bool showHitboxes;
 }

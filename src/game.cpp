@@ -25,6 +25,8 @@ Game::Game()
     // Set seed for random number generator
     std::srand(std::time({}));
 
+    InitAudioDevice();
+
     // Initialize window and set some flags.
     InitWindow(
         Globals::minScreenWidth,
@@ -75,6 +77,7 @@ Game::Game()
 
 
 Game::~Game() {
+    CloseAudioDevice();
     CloseWindow();
 
     std::cout << "[Game]: destroyed.\n";

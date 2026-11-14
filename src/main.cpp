@@ -2,6 +2,7 @@
 #include "globals.hpp"
 
 
+bool Globals::isMuted     { false };
 bool Globals::showHitboxes{ false };
 
 

@@ -9,7 +9,9 @@ Implementation for EnemyManager class members.
 EnemyManager::EnemyManager()
     : m_enemies            ({})
     , m_secondsToEnemySpawn(s_getSecondsToEnemySpawn())
-{}
+{
+    m_enemies.emplace_back(EnemyType::instructions);
+}
 
 
 EnemyManager::~EnemyManager() {}
