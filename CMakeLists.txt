@@ -62,6 +62,7 @@ if(EMSCRIPTEN)
         ${PROJECT_NAME}
         PRIVATE
             "--embed-file=../resources@resources"
+            "--shell-file=../template.html"
     )
 endif()
 # Link raylib to the executable target.

@@ -57,3 +57,4 @@ In project root directory run:
 - `emcmake cmake -B web_build --preset Web` (only needs to be run once)
 - `cmake --build web_build` (run to rebuild)
 - `cd web_build` and `python -m http.server 8000` (to serve the web build on port 8000)
+- Go to localhost:8000/abiotic_runner.html to play

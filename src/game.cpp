@@ -48,7 +48,7 @@ Game::Game()
 
     unsigned windowScale{ 2 };
     while(
-           monitorWidth  > (Globals::minScreenWidth * windowScale)
+           monitorWidth  > (Globals::minScreenWidth  * windowScale)
         && monitorHeight > (Globals::minScreenHeight * windowScale)
     ) {
         ++windowScale;
@@ -56,9 +56,9 @@ Game::Game()
     if(windowScale > 2) windowScale -= 2;
     else                windowScale -= 1;
 
-    unsigned targetWindowWidth    { Globals::minScreenWidth * windowScale };
-    unsigned targetWindowHeight   { Globals::minScreenHeight * windowScale };
-    unsigned targetWindowPositionX{ (monitorWidth - targetWindowWidth) / 2 };
+    unsigned targetWindowWidth    { Globals::minScreenWidth  * windowScale   };
+    unsigned targetWindowHeight   { Globals::minScreenHeight * windowScale   };
+    unsigned targetWindowPositionX{ (monitorWidth  - targetWindowWidth ) / 2 };
     unsigned targetWindowPositionY{ (monitorHeight - targetWindowHeight) / 2 };
 
     SetWindowSize(

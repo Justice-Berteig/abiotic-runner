@@ -52,8 +52,8 @@ void Enemy::draw(
     if(m_type == EnemyType::instructions) {
         DrawText(
             "Press Spacebar or W to jump.\nPress M to toggle mute",
-            100 * renderScale,
-            200 * renderScale,
+            130 * renderScale,
+            floorStartPosition + (14 * renderScale),
             12 * renderScale,
             Color(
                 255,

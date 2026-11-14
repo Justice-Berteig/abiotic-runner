@@ -74,6 +74,6 @@ void EnemyManager::draw(
 
 
 float EnemyManager::s_getSecondsToEnemySpawn() {
-    return (((float)rand() / RAND_MAX) * s_rangeSecondsBetweenEnemies)
+    return (((float)rand() / (float)RAND_MAX) * s_rangeSecondsBetweenEnemies)
             + s_minSecondsBetweenEnemies;
 }
