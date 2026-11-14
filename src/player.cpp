@@ -10,16 +10,13 @@ Implementations for Player class.
 
 
 Player::Player()
-    : isDead(false)
+    : isDead    (false)
     , m_onGround(true)
-    , m_health(m_maxHealth)
-    , m_posY(0)
-    , m_velY(0)
-    , m_anim(Assets::Texture::player_run)
+    , m_health  (m_maxHealth)
+    , m_posY    (0)
+    , m_velY    (0)
+    , m_anim    (Assets::Texture::player_run)
 {}
-
-
-Player::~Player() {}
 
 
 void Player::tick(float deltaTime) {

@@ -3,10 +3,11 @@ Implementation for EnemyManager class members.
 */
 
 #include "enemy_manager.hpp"
+#include "globals.hpp"
 
 
 EnemyManager::EnemyManager()
-    : m_enemies()
+    : m_enemies            ({})
     , m_secondsToEnemySpawn(s_getSecondsToEnemySpawn())
 {}
 
@@ -23,7 +24,13 @@ void EnemyManager::tick(
     else {
         float overflow{ m_secondsToEnemySpawn };
         m_secondsToEnemySpawn = s_getSecondsToEnemySpawn() + overflow;
-        m_enemies.emplace_back();
+
+        double rand{ Globals::zeroToOne(Globals::gen) };
+        if(rand < 0.1) {
+            m_enemies.emplace_back(EnemyType::pest);
+        } else {
+            m_enemies.emplace_back(EnemyType::peccary);
+        }
     }
 
     // Do tick for each enemy + check for collision with player.

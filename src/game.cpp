@@ -16,11 +16,11 @@
 
 
 Game::Game()
-    : m_assetManager()
-    , m_background()
-    , m_enemyManager()
+    : m_assetManager ()
+    , m_background   ()
+    , m_enemyManager ()
     , m_lastFrameTime(std::chrono::steady_clock::now())
-    , m_player()
+    , m_player       ()
 {
     // Set seed for random number generator
     std::srand(std::time({}));

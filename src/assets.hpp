@@ -14,6 +14,8 @@ namespace Assets {
         cloud,
         dirt,
         dirt_grassy,
+        missing_texture,
+        peccary_walk,
         pest_move,
         player_run,
         player_jump,
@@ -30,6 +32,10 @@ namespace Assets {
                 return "resources/dirt.png";
             case Texture::dirt_grassy:
                 return "resources/dirt_grassy.png";
+            case Texture::missing_texture:
+                return "resources/missing_texture.png";
+            case Texture::peccary_walk:
+                return "resources/peccary_walk.png";
             case Texture::pest_move:
                 return "resources/pest_move.png";
             case Texture::player_run:
@@ -56,6 +62,10 @@ namespace Assets {
                 return {  32,  32 };
             case Texture::dirt_grassy:
                 return {  32,  32 };
+            case Texture::missing_texture:
+                return {  32,  32 };
+            case Texture::peccary_walk:
+                return {  64,  32 };
             case Texture::pest_move:
                 return {  32,  32 };
             case Texture::player_run:
@@ -76,6 +86,8 @@ namespace Assets {
 
     static constexpr int getFrameCountInTexture(Texture texture) {
         switch(texture) {
+            case Texture::peccary_walk:
+                return 10;
             case Texture::pest_move:
                 return 10;
             case Texture::player_run:

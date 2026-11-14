@@ -10,10 +10,15 @@ Class for enemies.
 #include <raylib.h>
 
 
+enum class EnemyType {
+    peccary,
+    pest
+};
+
+
 class Enemy {
     public:
-        Enemy();
-        ~Enemy();
+        Enemy(EnemyType type);
 
         void tick(float deltaTime);
         void draw(
@@ -32,4 +37,5 @@ class Enemy {
     private:
         float     m_moveSpeed;
         Animation m_animation;
+        EnemyType m_type;
 };

@@ -15,7 +15,6 @@ Player class.
 class Player {
     public:
         Player();
-        ~Player();
 
         void tick(float deltaTime);
         void draw(

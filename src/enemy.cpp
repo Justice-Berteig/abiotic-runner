@@ -8,14 +8,20 @@ Implementation of Enemy class members.
 #include "globals.hpp"
 
 
-Enemy::Enemy()
+Enemy::Enemy(EnemyType type)
     : position(500.0f, 0.0f)
-    , m_animation(Assets::Texture::pest_move)
-    , m_moveSpeed(4.0f)
-{}
-
-
-Enemy::~Enemy() {
+    , m_type  (type)
+{
+    switch(m_type) {
+        case EnemyType::peccary:
+            m_animation = Animation(Assets::Texture::peccary_walk);
+            m_moveSpeed = 24.0f;
+            break;
+        case EnemyType::pest:
+            m_animation = Animation(Assets::Texture::pest_move);
+            m_moveSpeed = 4.0f;
+            break;
+    }
 }
 
 
@@ -64,13 +70,30 @@ Rectangle Enemy::getCollider() const {
     // Get dimensions for this enemy's texture to build the collider relative to
     // that.
     Vector2 textureDimensions{
-        Assets::getDimensionsForTexture(Assets::Texture::pest_move)
+        Assets::getDimensionsForTexture(m_animation.spriteSheet)
     };
 
-    return {
-        position.x + 6.0f,
-        position.y + 18.0f,
-        textureDimensions.x - 10,
-        textureDimensions.y - 18
-    };
+    switch(m_type) {
+        case EnemyType::peccary:
+            return {
+                position.x + 8.0f,
+                position.y + 8.0f,
+                textureDimensions.x - 28,
+                textureDimensions.y -  8
+            };
+        case EnemyType::pest:
+            return {
+                position.x + 6.0f,
+                position.y + 18.0f,
+                textureDimensions.x - 10,
+                textureDimensions.y - 18
+            };
+        default:
+            return {
+                position.x,
+                position.y,
+                textureDimensions.x,
+                textureDimensions.y
+            };
+    }
 }

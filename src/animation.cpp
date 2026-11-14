@@ -7,6 +7,17 @@
 
 #include "raylib.h"
 
+#include <cmath>
+
+
+Animation::Animation()
+    : spriteSheet      (Assets::Texture::missing_texture)
+    , animationFinished(false)
+    , currentFrame     (0)
+    , totalFrames      (Assets::getFrameCountInTexture(spriteSheet))
+    , lastFrameTime    (0.0f)
+{ };
+
 
 Animation::Animation(Assets::Texture spriteSheet)
     : spriteSheet      (spriteSheet)

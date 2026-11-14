@@ -33,7 +33,7 @@ namespace Cloud {
 
     // Create function to get random spawn position for clouds.
     static constexpr float s_spawnX    { 400.0f };
-    static constexpr float s_minSpawnY { 96.0f };
+    static constexpr float s_minSpawnY {  96.0f };
     static constexpr float s_maxSpawnY { 200.0f };
     static std::uniform_real_distribution<float> distSpawnY(
         s_minSpawnY,

@@ -9,6 +9,7 @@
 
 
 struct Animation {
+    Animation();
     Animation(Assets::Texture spriteSheet);
 
     Assets::Texture spriteSheet;

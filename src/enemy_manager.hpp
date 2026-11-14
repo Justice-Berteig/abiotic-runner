@@ -7,6 +7,7 @@ Used to spawn and keep track of all enemies.
 #include "enemy.hpp"
 #include "player.hpp"
 
+#include <random>
 #include <vector>
 
 
@@ -27,7 +28,7 @@ class EnemyManager {
 
     private:
         static constexpr float s_maxSecondsBetweenEnemies{ 4.8f };
-        static constexpr float s_minSecondsBetweenEnemies{  1.2f };
+        static constexpr float s_minSecondsBetweenEnemies{ 1.2f };
         static constexpr float s_rangeSecondsBetweenEnemies{
             s_maxSecondsBetweenEnemies - s_minSecondsBetweenEnemies
         };
