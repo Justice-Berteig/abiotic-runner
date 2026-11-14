@@ -108,6 +108,9 @@ void Game::m_tick() {
     };
     m_lastFrameTime = currentFrameTime;
 
+    // Toggle hitboxes if 'H' is pressed.
+    if(IsKeyPressed(KEY_H)) Globals::showHitboxes = !Globals::showHitboxes;
+
     // Process background tick.
     m_background.tick(deltaTime);
 

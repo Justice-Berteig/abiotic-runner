@@ -6,6 +6,7 @@ Implementations for Player class.
 
 #include "animation.hpp"
 #include "assets.hpp"
+#include "globals.hpp"
 #include "raylib.h"
 
 
@@ -20,8 +21,8 @@ Player::Player()
 
 
 void Player::tick(float deltaTime) {
-    if(m_onGround && IsKeyPressed(KEY_SPACE)) {
-        // If on ground and spacebar pressed, apply jump.
+    if(m_onGround && (IsKeyPressed(KEY_SPACE) || IsKeyPressed(KEY_W))) {
+        // If on ground and spacebar/W pressed, apply jump.
         m_onGround = false;
         m_velY     = -m_jumpVelocity;
     }else if(!m_onGround) {
@@ -32,8 +33,8 @@ void Player::tick(float deltaTime) {
     m_posY += m_velY * 10 * deltaTime;
 
     if(m_posY >= 0) {
-        m_posY = 0;
-        m_velY = 0;
+        m_posY     = 0;
+        m_velY     = 0;
         m_onGround = true;
     }
 
@@ -79,18 +80,20 @@ void Player::draw(
         assetManager
     );
 
-    // Draw player collider.
-    Rectangle collider{ getCollider() };
-    DrawRectangleLines(
-        collider.x * renderScale,
-        (
-              floorStartPosition
-            - ((collider.height - m_posY) * renderScale)
-        ),
-        collider.width * renderScale,
-        collider.height * renderScale,
-        RED
-    );
+    if(Globals::showHitboxes) {
+        // Draw player collider.
+        Rectangle collider{ getCollider() };
+        DrawRectangleLines(
+            collider.x * renderScale,
+            (
+                  floorStartPosition
+                - ((collider.height - m_posY) * renderScale)
+            ),
+            collider.width * renderScale,
+            collider.height * renderScale,
+            RED
+        );
+    }
 }
 
 

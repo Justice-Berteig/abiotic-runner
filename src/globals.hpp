@@ -27,6 +27,9 @@ namespace Globals {
     inline static std::random_device rd;
     inline static std::mt19937       gen(rd());
 
-    // Random distribution from 0 to 1
+    // Random distribution from 0 to 1.
     inline static std::uniform_real_distribution<double> zeroToOne(0.0, 1.0);
+
+    // Toggle for showing entity hitboxes.
+    extern bool showHitboxes;
 }

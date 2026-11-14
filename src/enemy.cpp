@@ -51,18 +51,20 @@ void Enemy::draw(
         assetManager
     );
 
-    // Draw enemy collider.
-    Rectangle collider{ getCollider() };
-    DrawRectangleLines(
-        collider.x * renderScale,
-        (
-              floorStartPosition
-            - ((collider.height - position.y) * renderScale)
-        ),
-        collider.width * renderScale,
-        collider.height * renderScale,
-        RED
-    );
+    if(Globals::showHitboxes) {
+        // Draw enemy collider.
+        Rectangle collider{ getCollider() };
+        DrawRectangleLines(
+            collider.x * renderScale,
+            (
+                  floorStartPosition
+                - ((collider.height - position.y) * renderScale)
+            ),
+            collider.width * renderScale,
+            collider.height * renderScale,
+            RED
+        );
+    }
 }
 
 
