@@ -32,5 +32,5 @@ namespace Tree {
     };
 
     // Create function to get random spawn position for trees.
-    static constexpr Vector2 s_spawnPosition { 400.0f, 128.0f };
+    static constexpr Vector2 s_spawnPosition { 500.0f, 128.0f };
 };

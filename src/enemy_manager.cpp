@@ -25,8 +25,9 @@ void EnemyManager::tick(
         float overflow{ m_secondsToEnemySpawn };
         m_secondsToEnemySpawn = s_getSecondsToEnemySpawn() + overflow;
 
+        // Randomly decide which enemy to spawn
         double rand{ Globals::zeroToOne(Globals::gen) };
-        if(rand < 0.1) {
+        if(rand < 0.7) {
             m_enemies.emplace_back(EnemyType::pest);
         } else {
             m_enemies.emplace_back(EnemyType::peccary);
@@ -35,7 +36,9 @@ void EnemyManager::tick(
 
     // Do tick for each enemy + check for collision with player.
     for(int i{ 0 }; i < m_enemies.size(); i++) {
+        float oldPos{ m_enemies[i].position.x };
         m_enemies[i].tick(deltaTime);
+        if(oldPos > 0 && m_enemies[i].position.x <=0) player.incrementScore();
 
         if(!player.isDead) player.checkCollisionWith(m_enemies[i]);
 

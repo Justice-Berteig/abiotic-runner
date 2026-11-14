@@ -12,10 +12,10 @@ Implementations for Player class.
 Player::Player()
     : isDead    (false)
     , m_onGround(true)
-    , m_health  (m_maxHealth)
     , m_posY    (0)
     , m_velY    (0)
     , m_anim    (Assets::Texture::player_run)
+    , m_score   (0)
 {}
 
 
@@ -115,4 +115,14 @@ Rectangle Player::getCollider() const {
         m_texDimensions.x - 34,
         m_texDimensions.y - 6
     };
+}
+
+
+int Player::getScore() {
+    return m_score;
+}
+
+
+void Player::incrementScore() {
+    ++m_score;
 }

@@ -183,6 +183,22 @@ void Game::m_draw() {
         m_assetManager
     );
 
+    // Draw UI.
+    DrawText(
+        TextFormat("Score: %i", m_player.getScore()),
+        11 * renderScale,
+        11 * renderScale,
+        16 * renderScale,
+        BLACK
+    );
+    DrawText(
+        TextFormat("Score: %i", m_player.getScore()),
+        10 * renderScale,
+        10 * renderScale,
+        16 * renderScale,
+        WHITE
+    );
+
     EndDrawing();
 }
 

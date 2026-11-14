@@ -9,8 +9,6 @@ Player class.
 #include "assets.hpp"
 #include "enemy.hpp"
 
-#include <cstdint>
-
 
 class Player {
     public:
@@ -30,23 +28,28 @@ class Player {
         */
         void checkCollisionWith(const Enemy& enemy);
 
+        /*
+        Method to get the collision box for the player.
+        */
+        Rectangle getCollider() const;
+
+        /*
+        Functions for getting and incrementing score.
+        */
+        int  getScore();
+        void incrementScore();
+
     private:
         static constexpr float   m_gravityAcceleration{ 34.6f };
         static constexpr float   m_jumpVelocity       { 22.8f };
         static constexpr float   m_posX               { 32.0f };
-        static constexpr uint8_t m_maxHealth          { 5 };
         static constexpr Vector2 m_texDimensions      {
             Assets::getDimensionsForTexture(Assets::Texture::player_run)
         };
 
         bool      m_onGround;
-        uint8_t   m_health;
+        int       m_score;
         float     m_posY;
         float     m_velY;
         Animation m_anim;
-
-        /*
-        Method to get the collision box for the player.
-        */
-        Rectangle getCollider() const;
 };
