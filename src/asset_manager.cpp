@@ -14,12 +14,20 @@ AssetManager::AssetManager()
 
 AssetManager::~AssetManager() {
     // Unload all loaded sounds.
-    for(auto it{ m_loadedSounds.begin() }; it != m_loadedSounds.end(); ++it)
-        m_unloadSound(it->first);
+    auto soundIterator{ m_loadedSounds.begin() };
+    while(soundIterator != m_loadedSounds.end())
+    {
+        m_unloadSound(soundIterator->first);
+        soundIterator = m_loadedSounds.begin();
+    }
 
     // Unload all loaded textures.
-    for(auto it{ m_loadedTextures.begin() }; it != m_loadedTextures.end(); ++it)
-        m_unloadTexture(it->first);
+    auto textureIterator{ m_loadedTextures.begin() };
+    while(textureIterator != m_loadedTextures.end())
+    {
+        m_unloadTexture(textureIterator->first);
+        textureIterator = m_loadedTextures.begin();
+    }
 }
 
 

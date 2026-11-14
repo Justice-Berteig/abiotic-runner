@@ -78,6 +78,9 @@ Game::Game()
 
 
 Game::~Game() {
+    // Explicitly call destructor to unload textures before CloseWindow().
+    m_assetManager.~AssetManager();
+
     CloseAudioDevice();
     CloseWindow();
 
