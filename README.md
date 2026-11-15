@@ -1,16 +1,23 @@
 This is a very simple endless runner based on the sleeping minigame from Abiotic
 Factor. Made with C++ and raylib.
+![Screenshot 1](/screenshots/screenshot1.png?raw=true)
+![Screenshot 2](/screenshots/screenshot2.png?raw=true)
+![Screenshot 3](/screenshots/screenshot3.png?raw=true)
 
 # Controls
-Space to jump
+Space or "W" to jump  
+"M" to toggle mute the audio  
+"H" to toggle hitbox visibility  
 
 # Current Features
 - Infinitely scrolling ground
 - Player that can jump
-- Pest enemies that can collide with the player
+- Pest and peccary enemies that can collide with the player
 - Game restarts on death
 - Randomly spawning decorative clouds
 - Randomly spawning decorative trees
+- Score counter that increments when passing enemies
+- Some sound effects
 
 # Requirements for Building:
 - CMake
